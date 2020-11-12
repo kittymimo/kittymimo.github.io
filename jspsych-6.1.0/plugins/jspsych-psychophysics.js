@@ -123,11 +123,11 @@ jsPsych.plugins["psychophysics"] = (function() {
             description: 'This will be true when the stimulus is presented.'
           },
           trial_ends_after_audio: {
-            type: jsPsych.plugins.parameterType.BOOL,
-            pretty_name: 'Trial ends after audio',
-            default: false,
-            description: 'If true, then the trial will end as soon as the audio file finishes playing.'
-          },
+			type: jsPsych.plugins.parameterType.BOOL,
+  			pretty_name: 'Trial ends after audio',
+  			default: false,
+  			description: 'If true, then the trial will end as soon as the audio file finishes playing.'
+		  }
         }
       },
       choices: {
@@ -412,17 +412,6 @@ jsPsych.plugins["psychophysics"] = (function() {
         console.log('HTML5 audio')
       }
 
-      // set up end event if trial needs it
-      if(stim.trial_ends_after_audio){
-        if(stim.context !== null){
-          stim.source.onended = function() {
-            end_trial();
-          }
-        } else {
-          stim.audio.addEventListener('ended', end_trial);
-        }
-      }
-
       jsPsych.pluginAPI.setTimeout(function() {
         // start audio
         if(stim.context !== null){
@@ -432,6 +421,15 @@ jsPsych.plugins["psychophysics"] = (function() {
           stim.audio.play();
         }  
       }, stim.show_start_time);
+      
+      // set up end event if trial needs it
+	  if(stim.trial_ends_after_audio){
+	  if(stim.context !== null){
+	    stim.source.addEventListener('ended', end_trial);
+	  } else {
+	    stim.audio.addEventListener('ended', end_trial);
+	  }
+	  }
     }
 
     function common_set(stim){
@@ -879,8 +877,8 @@ jsPsych.plugins["psychophysics"] = (function() {
       key: null
     };
 
-    // function to end trial when it is time
-    let end_trial = function() {
+	// function to end trial when it is time
+	function end_trial() {
       // console.log(default_maxWidth)
       document.getElementById('jspsych-content').style.maxWidth = default_maxWidth; // restore
       window.cancelAnimationFrame(frameRequestID); //Cancels the frame request
@@ -914,13 +912,13 @@ jsPsych.plugins["psychophysics"] = (function() {
           const stim = trial.stimuli[i];
           stim.is_presented = false;
           //console.log(stim);
-          if (typeof stim.context !== 'undefined') { // If the stimulus is audio data
+          if (typeof stim.context !== 'undefined') {
             if(stim.context !== null){
               stim.source.stop();
               stim.source.onended = function() { }
             } else {
               stim.audio.pause();
-              stim.audio.removeEventListener('ended', end_trial);
+              //audio.removeEventListener('ended', end_trial);
             }
           }
         }
