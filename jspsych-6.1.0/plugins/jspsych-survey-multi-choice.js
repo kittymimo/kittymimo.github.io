@@ -69,7 +69,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       button_label: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button label',
-        default:  'Continue',
+        default:  'Continuer',
         description: 'Label of the button.'
       }
     }

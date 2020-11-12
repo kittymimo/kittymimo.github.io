@@ -67,13 +67,13 @@ jsPsych.plugins['survey-multi-select'] = (function() {
       button_label: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button label',
-        default:  'Continue',
+        default:  'Continuer',
         description: 'Label of the button.'
       },
       required_message: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Required message',
-        default: 'You must choose at least one response for this question',
+        default: 'Veuillez remplir ce champ.',
         description: 'Message that will be displayed if required question is not answered.'
       }
     }

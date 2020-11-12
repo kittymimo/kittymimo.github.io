@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Recherche sur le langage et les &eacute;motions</title>
-        <script src="jspsych-6.1.0/jspsych.js"></script>
+        <title>Recherche sur le langage et les émotions</title>
+		<script src="jspsych-6.1.0/jspsych.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-select.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-audio-keyboard-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-psychophysics.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-external-html.js"></script>
         <script src="stimuli.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
@@ -14,6 +20,246 @@
 
   	var timeline = [];
   
+	var formulaire_consentement = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <b>FORMULAIRE D’INFORMATION ET DE CONSENTEMENT </b> <br>"+
+        "<div class='justified'><br><b>Titre du projet </b>: Effet des émotions sur l’apprentissage syntaxique d’une langue étrangère chez les enfants <br>"+
+        '<br><b>Mené par </b>: Myriam Michaud, étudiante au baccalauréat en psychologie à l’Université du Québec à Trois-Rivières <br>'+
+        '<br><b>Sous la direction de </b>: Simon Rigoulot, professeur au Département de psychologie de l’Université du Québec à Trois-Rivières et Catherine Mimeau, chercheuse au Département de psychologie de l’Université du Québec à Trois-Rivières <br>'+
+        '<br><b>Source de financement </b>: Fonds de démarrage, UQTR, Simon Rigoulot <br>'+
+        '<br><b>Déclaration de conflit d’intérêts </b>: Aucun conflit d’intérêts à déclarer.<br>'+
+        '<br><b>Préambule</b><br>'+
+        'La participation de votre enfant [ou de la personne dont vous avez la charge] à la recherche, qui vise à mieux comprendre l’effet des émotions sur la performance à une tâche langagière, serait grandement appréciée. Cependant, avant d’accepter que votre enfant [ou la personne dont vous avez la charge] participe à ce projet et de signer ce formulaire d’information et de consentement, veuillez prendre le temps de lire ce formulaire. Il vous aidera à comprendre ce qu’implique l’éventuelle participation de votre enfant [ou de la personne dont vous avez la charge] à la recherche de sorte que vous puissiez prendre une décision éclairée à ce sujet.<br>'+
+        '<br>Ce formulaire peut contenir des mots que vous ne comprenez pas. Nous vous invitons à poser toutes les questions que vous jugerez utiles au chercheur responsable de ce projet de recherche ou à un membre de son équipe de recherche. Sentez-vous libre de leur demander de vous expliquer tout mot ou renseignement qui n’est pas clair. Prenez tout le temps dont vous avez besoin pour lire et comprendre ce formulaire avant de prendre votre décision.<br>'+
+        '<br><b>Objectifs et résumé du projet de recherche</b><br>'+
+        'L’objectif de ce projet de recherche est de mieux comprendre l’influence des émotions sur l’apprentissage de la structure de phrases d’une langue étrangère chez des élèves de la première à la sixième année du primaire. Pour ce faire, votre enfant [ou la personne dont vous avez la charge] devra réaliser une tâche langagière dans laquelle des phrases et des images véhiculant différentes émotions seront présentées.<br>'+
+        '<br><b>Nature et durée de votre participation</b><br>'+
+        'L’étude est d’une durée totale d’environ 30 minutes. Pour participer au projet, votre enfant [ou la personne dont vous avez la charge] doit être entre la première et la sixième année du primaire, avoir le français comme langue maternelle, avoir une vue et une ouïe normales ou corrigées à la normale, ne pas avoir subi de traumatisme crânien et ne pas avoir reçu de diagnostic de trouble neurodéveloppemental (p. ex., déficit d’attention, trouble du langage, trouble d’apprentissage).<br>'+
+        '<br>Avant le déroulement de la tâche langagière, vous devrez répondre à un questionnaire développé par nos soins, qui permettra de recueillir des informations générales sur votre enfant [ou la personne dont vous avez la charge] (sexe, date de naissance, préférence manuelle) et de déterminer s’il est éligible à l’étude. La durée du questionnaire ne devrait pas excéder 2 minutes.<br>'+
+        '<br>Dans la tâche langagière, votre enfant [ou la personne dont vous avez la charge] devra écouter des phrases et identifier quelle image, parmi un choix de quatre, décrit la phrase donnée. Une rétroaction lui sera donnée après la présentation de chacune des phrases. Certaines phrases contiendront des mots à connotation émotionnelle et les images représenteront des visages avec des expressions faciales positives, négatives et neutres. La tâche durera environ 25 minutes. <b>Dans cette partie, il sera important de laisser votre enfant [ou la personne dont vous avez la charge] répondre par lui-même, sans intervenir, et de s’assurer de sa concentration sur la tâche. </b>Des pauses seront intégrées à la tâche à des moments prédéterminés. À la fin de la tâche, votre enfant [ou la personne dont vous avez la charge] devra indiquer (avec votre aide, au besoin) la stratégie qu’il a utilisée pour répondre aux questions.<br>'+
+        '<br><b>Risques et inconvénients</b><br>'+
+        'Aucun risque spécifique n’est associé à la participation de votre enfant [ou de la personne dont vous avez la charge]. Les seuls risques possibles seraient la fatigue ou l’ennui lié à l’écoute de nombreuses phrases et le temps consacré au projet, soit environ 30 minutes. Afin de minimiser la fatigue et l’ennui, des pauses seront intégrées à la tâche.<br>'+
+        '<br>Si la passation de la tâche engendre certains questionnements ou inconforts dont vous ou votre enfant [ou la personne dont vous avez la charge] aimerait discuter, vous pourrez contacter la chercheuse responsable du projet (myriam.michaud2@uqtr.ca) ou les superviseurs de la recherche Simon Rigoulot et Catherine Mimeau (simon.rigoulot@uqtr.ca et catherine.mimeau@uqtr.ca) qui vous guideront vers des ressources appropriées, telles que le site de l’Ordre des psychologues du Québec afin d’obtenir de l’aide et les ressources nécessaires (https://www.ordrepsy.qc.ca).<br>'+
+        '<br><b>Avantages ou bénéfices</b><br>'+
+        'Votre participation à l’étude contribuera à l’avancement des connaissances dans les domaines du langage et de la cognition.<br>'+
+        '<br><b>Compensation ou incitatif</b><br>'+
+        'Une carte-cadeau de 50$ chez Renaud-Bray sera remise à un participant au hasard afin de le remercier pour son temps. Il sera possible de remplir un formulaire demandant votre nom, courriel et numéro de téléphone après avoir complété la tâche langagière. Nous entrerons en contact avec le parent du participant gagnant et la carte-cadeau lui sera ensuite envoyée par la poste.<br>'+
+        '<br><b> Confidentialité</b><br>'+
+        'Les données recueillies dans cette étude sont entièrement confidentielles et ne pourront en aucun cas mener à l’identification de votre enfant [ou de la personne dont vous avez la charge]. La confidentialité sera assurée grâce à un identifiant numérique. Les résultats de la recherche, qui pourront être diffusés sous forme de travaux écrits, d’affiches, d’articles scientifiques ou de communications à des congrès, ne permettront pas d’identifier les participants.<br>'+
+        '<br>Les données recueillies seront conservées dans une base de données protégée par un mot de passe. Les seules personnes qui y auront accès seront la responsable de la recherche ainsi que les deux superviseurs de la recherche. Toutes ces personnes ont signé un engagement à la confidentialité.  Les données seront détruites au plus tard cinq ans après la diffusion des résultats du projet. Celles-ci ne seront pas utilisées à d’autres fins que celles décrites dans le présent document.<br>'+
+        '<br><b>Particpation volontaire</b><br>'+
+        'La participation à cette étude se fait sur une base volontaire. Votre enfant [ou la personne dont vous avez la charge] est entièrement libre de participer ou non, de refuser de répondre à certaines questions et de se retirer en tout temps sans préjudice et sans avoir à fournir d’explications. Vous êtes également entièrement libre d’accepter ou de refuser que votre enfant [ou la personne dont vous avez la charge] participe à la recherche sans avoir à motiver votre décision ni à subir quelque préjudice que ce soit. Cependant, comme il nous est impossible de retracer les données d’un participant précis, il ne sera pas possible de retirer les données déjà accumulées. Le fait de participer ou non n’aura pas de conséquences sur le dossier académique de votre enfant [ou la personne dont vous avez la charge].<br>'+
+        '<br><b>Responsable de la recherche</b><br>'+
+        'Pour obtenir de plus amples renseignements ou pour toute question concernant ce projet de recherche, vous pouvez communiquer avec Myriam Michaud (myriam.michaud2@uqtr.ca), responsable de la recherche et étudiante au baccalauréat en psychologie à l’Université du Québec à Trois-Rivières, avec Simon Rigoulot, professeur au département de psychologie de l’UQTR (simon.rigoulot@uqtr.ca) ou avec Catherine Mimeau, chercheuse au département de psychologie de l’UQTR (catherine.mimeau@uqtr.ca).<br>'+
+        '<br><b>Surveillance des aspects éthique de la recherche</b><br>'+
+        'Cette recherche est approuvée par le comité d’éthique de la recherche avec des êtres humains de l’Université du Québec à Trois-Rivières et un certificat portant le numéro [no de certificat] a été émis le [date d’émission].<br>'+
+        '<br>Pour toute question ou plainte d’ordre éthique concernant cette recherche, vous devez communiquer avec la secrétaire du comité d’éthique de la recherche de l’Université du Québec à Trois-Rivières, par téléphone (819) 376-5011, poste 2129 ou par courrier électronique CEREH@uqtr.ca.<br>'+
+        '<br><b>Engagement de la chercheuse</b><br>'+
+        'Moi, Myriam Michaud, m`engage à procéder à cette étude conformément à toutes les normes éthiques qui s`appliquent aux projets comportant des participants humains.<br>'+
+        '<br><b>CONSENTEMENT DU PARENT [ou tuteur ou curateur]</b><br>'+
+        'En cliquant sur le bouton de participation, vous indiquez<br>'+
+        '• avoir lu l’information<br>'+
+        '• être d’accord que votre enfant [ou la personne dont vous avez la charge] participe à l’étude</div>',
+        options: ["Oui, j'accepte que mon enfant participe"], 
+        required: true,
+        horizontal: true,
+        name: 'Consentement',
+        required_message: 'Vous devez accepter pour continuer.',
+        button_label: 'Continuer'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(formulaire_consentement);
+
+var q1 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: "<p> 1. Quel est le sexe de votre enfant? </p>",
+        options: ["Fille", "Garçon","Autre" ],
+        required: true,
+        horizontal: true,
+        name: 'sexe',
+        required_message: 'Veuillez remplir ce champ. ',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q1);
+
+var q2 = {
+  type: 'survey-text',
+  questions: [
+	{prompt: " <p> 2. Quelle est la date de naissance de votre enfant? <p/>", name: 'date_naissance', placeholder:"Jour/Mois/Année (par exemple, 12/01/2010)", required: true},
+	],
+		};
+timeline.push(q2);
+
+var q3 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 3. Quel est le niveau scolaire actuel de votre enfant? <p/>",
+        options: ["1ère année", "2e année","3e année", "4e année", "5e année", "6e année" ],
+        required: true,
+        horizontal: true,
+        name: 'niveau_scolaire',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q3);
+
+var q4 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 4. Quelle main votre enfant utilise-t-il(-elle) pour écrire? <p/>",
+        options: ["Droite", "Gauche","Ambidextre"],
+        required: true,
+        horizontal: true,
+        name: 'main_dominante',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q4);
+
+var q5 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 5. La langue maternelle de votre enfant (la première langue qu’il ou elle a apprise et qu’il ou elle parle toujours) est-elle le français? <p/>",
+        options: ["Oui", "Non"],
+        required: true,
+        horizontal: true,
+        name: 'langue_maternelle',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q5);
+
+var q6 = {
+  type: 'survey-text',
+  questions: [
+	{prompt: "<p> 6. S'il y a lieu, indiquez les autres langues que votre enfant connaît. <p/>", name: 'autre_langue', placeholder:"Autre(s) langue(s) connue(s)", required: false},
+	],
+		};
+timeline.push(q6);
+
+var q7 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 7. Votre enfant a-t-il(-elle) déjà reçu un diagnostic de trouble neurodéveloppemental (p. ex. : déficit d’attention, trouble du langage, trouble d’apprentissage)? <p/>",
+        options: ["Oui", "Non"],
+        required: true,
+        horizontal: true,
+        name: 'dx_trouble_neuro',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q7);
+
+var q8 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 8. Votre enfant a-t-il(-elle) déjà subi un traumatisme crânien? <p/>",
+        options: ["Oui", "Non"],
+        required: true,
+        horizontal: true,
+        name: 'traumatisme_cranien',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q8);
+
+var q9 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 9. Votre enfant a-t-il(-elle) une vue normale ou corrigée à la normale avec des lunettes ou verres de contact, par exemple? <p/>",
+        options: ["Oui", "Non"],
+        required: true,
+        horizontal: true,
+        name: 'vue',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q9);
+
+var q10 = {
+    	type: 'survey-multi-select',
+   		questions: [
+      {
+        prompt: " <p> 10. Votre enfant a-t-il(-elle) une ouïe normale ou corrigée à la normale, avec un appareil auditif, par exemple? <p/>",
+        options: ["Oui", "Non"],
+        required: true,
+        horizontal: true,
+        name: 'audition',
+        required_message: 'Veuillez remplir ce champ.',
+        button_label: 'Suivant'
+      }, 
+    ], 
+    randomize_question_order: false
+}
+timeline.push(q10);
+
+var page_1_options = ["Secondaire II ou moins", "Secondaire III ou IV, ou secondaire V non complété", "Diplôme d’études secondaires, ou études postsecondaires non complétées", "Diplôme, certificat ou attestation de métier (p. ex., diplôme d’études professionnelles)", "Diplôme, certificat ou attestation d’études collégiales, ou diplôme, certificat ou attestation universitaire de 1er cycle inférieur au baccalauréat", " Baccalauréat", "Diplôme, certificat ou attestation universitaire de 2e ou 3e cycle"];
+
+var q11 = {
+  type: 'survey-multi-choice',
+  questions: [
+    {prompt: "<p> 11. Quel est le plus haut niveau d’éducation que vous (ou l’autre parent de votre enfant) avez atteint? <p/>", name: 'Niveau_education_parents', options: page_1_options, required:true}, 
+  ],
+};
+timeline.push(q11);
+
+var page_1_options = ["Moins de 10 000 $", "De 10 000 $ à 19 999 $", "De 20 000 $ à 29 999 $", "De 30 000 $ à 39 999 $", "De 40 000 $ à 49 999 $", "De 50 000 $ à 59 999 $", "De 60 000 $ à 69 999 $", "De 70 000 $ à 79 999 $", "De 80 000 $ à 89 999 $", "De 90 000 $ à 99 999 $", "100 000 $ ou plus", "Refus de répondre"];
+
+var q12 = {
+  type: 'survey-multi-choice',
+  questions: [
+    {prompt: "<p> 12. Quel est votre revenu annuel familial, avant imposition (incluant toutes les sources de revenus)? <p/>", name: 'Revenu_annuel', options: page_1_options, required: true}
+  ],
+};
+timeline.push(q12);
+
+var intro = {       
+        type: 'instructions',     
+        pages: [      
+        "Pour commencer l'expérience, clique sur suivant.",   
+        '<img id="clavier" src="img/Clavier.jpg"></img> <img id="parents" src="img/Pas_parents.png"></img><br><br><br><br>' +
+        '<div> Dans cette expérience, tu entendras une phrase et tu devras ' +       
+        "choisir l'image à laquelle elle correspond.<br>" +      
+        'Place ton index sur la touche ← du clavier, ton majeur sur la touche ↑ et ton annulaire sur la touche →.<br>'+
+        'Tu dois faire cette partie sans aucune aide de tes parents.',  
+    ],        
+        show_clickable_nav: true      
+  }     
+  timeline.push(intro);
+    
 	var audio = [];
     for (var i=0; i<stimuli.length; i++) {
     	audio.push(stimuli[i].phrase);
@@ -30,13 +276,7 @@
     	images.push(stimuli[i].bonne_reponse);
     }
     images.push('img/x.png', 'img/crochet.png');
-
-    var instructions = {
-        type: 'html-keyboard-response',
-        stimulus: 'Instructions'
-    }
-    timeline.push(instructions);
-   
+       
 	var phrase = {
   		type: 'audio-keyboard-response',
 		stimulus: jsPsych.timelineVariable('phrase'),
@@ -111,20 +351,47 @@
 	}
 	timeline.push(procedure);
     
-    var fin = {
-        type: 'html-keyboard-response',
-        stimulus: 'Merci!'
-    }
-    timeline.push(fin);
+  var concours = {
+    type:'external-html',
+    url: "https://fr.surveymonkey.com/r/V6DHCZ7",
+    cont_btn: "Participer au tirage.",
+}
+//timeline.push(concours);
 
     jsPsych.init({
-        timeline: timeline,
+		timeline: timeline,
         preload_audio: audio,
         preload_images: images,
+<<<<<<< HEAD
+=======
+        show_progress_bar: true,
+        message_progress_bar: 'Progression',
+ 		use_webaudio: false,
+>>>>>>> 3f51df5c830b8b2b02236877aebf1eaadc6eeb51
         on_finish: function() {
 			jsPsych.data.displayData();
 		}
     })
 
-    </script>
+	</script>
+	
 </html>
+
+<style>
+	.justified{
+		text-align: justify;
+		margin: 50px;
+		text-align: 50px;
+	}
+
+  #clavier{
+    height: 200px !important;
+  }
+  #parents{
+    position: absolute; 
+    top: 50px; 
+    left: 25px;
+    height:150px;
+  }
+   
+</style>
