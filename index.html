@@ -356,18 +356,15 @@ var intro = {
     url: "https://fr.surveymonkey.com/r/V6DHCZ7",
     cont_btn: "Participer au tirage.",
 }
-//timeline.push(concours);
+timeline.push(concours);
 
     jsPsych.init({
 		timeline: timeline,
         preload_audio: audio,
         preload_images: images,
-<<<<<<< HEAD
-=======
         show_progress_bar: true,
         message_progress_bar: 'Progression',
  		use_webaudio: false,
->>>>>>> 3f51df5c830b8b2b02236877aebf1eaadc6eeb51
         on_finish: function() {
 			jsPsych.data.displayData();
 		}
