@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recherche sur le langage et les &eacute;motions</title>
+        <script src="jspsych-6.1.0/jspsych.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-audio-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-psychophysics.js"></script>
+        <script src="stimuli_v1.js"></script>
+        <script src="stimuli_v2.js"></script>
+        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body></body>
+    <script>
+
+  	var timeline = [];
+  	
+// Version
+    var version = jsPsych.randomization.sampleWithoutReplacement([1,2],1)[0];
+
+    var stimuli_pratique;
+        if (version == 1) {
+            stimuli_pratique = stimuli_pratique_v1;
+        } else {
+            stimuli_pratique = stimuli_pratique_v2;
+        }
+        
+    var stimuli_bloc1;
+        if (version == 1) {
+            stimuli_bloc1 = stimuli_bloc1_v1;
+        } else {
+            stimuli_bloc1 = stimuli_bloc1_v2;
+        }
+        
+    var stimuli_bloc2;
+        if (version == 1) {
+            stimuli_bloc2 = stimuli_bloc2_v1;
+        } else {
+            stimuli_bloc2 = stimuli_bloc2_v2;
+        }
+  	
+//Chargements des sons et des images
+  
+	var audio = [];
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	audio.push(stimuli_pratique[i].mot);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	audio.push(stimuli_bloc1[i].phrase);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	audio.push(stimuli_bloc2[i].phrase);
+    }
+
+	var images = [];
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image1);
+    }
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image2);
+    }
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image1);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image2);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].bonne_image);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image1);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image2);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].bonne_image);
+    }
+    
+    images.push('img/clavier.png', 'img/fleches.png', 'img/gauche.png', 'img/bas.png', 'img/droite.png', 'img/x.png', 'img/crochet.png');
+    
+    audio.push('sound/instructions1.m4a', 'sound/instructions2.m4a', 'sound/instructions3.m4a', 'sound/instructions4.m4a', 'sound/instructions5.m4a', 'sound/instructions6.m4a', 'sound/incorrect.mp3', 'sound/correct.mp3', 'sound/voici_la_bonne_reponse.mp3');
+
+//Début
+	    
+    var debut = {
+        type: 'html-keyboard-response',
+        stimulus: '<span style="font-size:20px;"font-family:arial;">Appuyez sur n&#039importe quelle touche.</span>'
+    }
+    timeline.push(debut);
+
+//Instructions pour les flèches
+
+    var instructions1 = {
+    	type: 'psychophysics',
+        stimuli: [
+        	{
+        		obj_type:'sound',
+        		file: "sound/instructions1.m4a",
+        		trial_ends_after_audio: true
+        	},
+        	{
+        		obj_type: 'image',
+        		file: "img/clavier.png",
+        		startX: 0,
+				startY: 0,
+				origin_center: true
+        	}
+        ],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS
+    }
+    timeline.push(instructions1);
+    
+    var instructions2 = {
+    	type: 'psychophysics',
+        stimuli: [
+        	{
+        		obj_type:'sound',
+        		file: "sound/instructions2.m4a",
+        		trial_ends_after_audio: true
+        	},
+        	{
+        		obj_type: 'image',
+        		file: "img/fleches.png",
+        		startX: 0,
+				startY: 0,
+				origin_center: true
+        	}
+        ],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS,
+    }
+    timeline.push(instructions2);
+    
+    var fleches = {
+		type: 'image-keyboard-response',
+		stimulus: "img/fleches.png",
+ 		choices: [37, 40, 39]
+	}
+	timeline.push(fleches);
+    
+	var instructions3 = {
+		type: 'audio-keyboard-response',
+		stimulus: "sound/instructions3.m4a",
+		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	timeline.push(instructions3);
+	
+	timeline.push(fleches);
+
+//Instructions pour la pratique
+
+	var instructions4 = {
+		type: 'audio-keyboard-response',
+		stimulus: "sound/instructions4.m4a",
+		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	timeline.push(instructions4);
+	
+    timeline.push(fleches);
+
+//Pratique
+
+	var mot = {
+		type: 'audio-keyboard-response',
+		stimulus: jsPsych.timelineVariable('mot'),
+		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	
+	var emotion = {
+		type: 'psychophysics',
+		stimuli: [
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image1'),
+				startX: -275,
+				startY: -175,
+				origin_center: true
+			},	
+			{
+				obj_type: 'image',
+				file: 'img/gauche.png',
+				startX: -275,
+				startY: -25,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image2'),
+				startX: 0,
+				startY: 130,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: 'img/bas.png',
+				startX: 0,
+				startY: 280,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image3'),
+				startX: 275,
+				startY: -175,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: 'img/droite.png',
+				startX: 275,
+				startY: -25,
+				origin_center: true
+			},
+		],
+ 		canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: [jsPsych.timelineVariable('bonne_reponse')]
+	}	
+	
+	var procedure_pratique = {
+		timeline: [mot, emotion],
+		timeline_variables: stimuli_pratique
+	}
+	timeline.push(procedure_pratique);
+	
+    timeline.push(fleches);
+
+//Instructions pour le test
+	
+	var instructions5 = {
+		type: 'audio-keyboard-response',
+		stimulus: "sound/instructions5.m4a",
+		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	timeline.push(instructions5);
+	
+    timeline.push(fleches);
+
+//Variables pour le test
+	
+	var phrase = {
+  		type: 'audio-keyboard-response',
+		stimulus: jsPsych.timelineVariable('phrase'),
+ 		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	
+	var image = {
+		type: 'psychophysics',
+		stimuli: [
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image1'),
+				startX: -275,
+				startY: -175,
+				origin_center: true
+			},	
+			{
+				obj_type: 'image',
+				file: 'img/gauche.png',
+				startX: -275,
+				startY: -25,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image2'),
+				startX: 0,
+				startY: 130,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: 'img/bas.png',
+				startX: 0,
+				startY: 280,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('image3'),
+				startX: 275,
+				startY: -175,
+				origin_center: true
+			},
+			{
+				obj_type: 'image',
+				file: 'img/droite.png',
+				startX: 275,
+				startY: -25,
+				origin_center: true
+			},
+		],
+ 		canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: [37, 40, 39],
+ 		data: {
+ 			version: jsPsych.timelineVariable('version'),
+ 			bloc: jsPsych.timelineVariable('bloc'),
+        	ordre_logique: jsPsych.timelineVariable('ordre_logique'),
+      	  	ordre_tache: jsPsych.timelineVariable('ordre_tache'),
+        	complexite: jsPsych.timelineVariable('complexite'),
+        	position_emotion: jsPsych.timelineVariable('position_emotion'),
+        	emotion: jsPsych.timelineVariable('emotion'),
+        	sexe_sujet: jsPsych.timelineVariable('sexe_sujet'),
+        	phrase: jsPsych.timelineVariable('phrase'),
+        	image1: jsPsych.timelineVariable('image1'),
+        	image2: jsPsych.timelineVariable('image2'),
+        	image3: jsPsych.timelineVariable('image3'),
+        	bonne_reponse: jsPsych.timelineVariable('bonne_reponse'),
+        	bonne_image: jsPsych.timelineVariable('bonne_image')
+		}, 
+		on_finish: function(data) {
+  			var reponse = false;
+			if (data.bonne_reponse == data.key_press) {
+				reponse = true;
+			}
+  		data.accuracy = reponse;
+       	}
+	}	
+	
+    var retroaction = {
+        type: 'psychophysics',
+        stimuli: [
+        	{
+				obj_type: 'image',
+				file: "img/x.png",
+				startX: 0,
+				startY: 0,
+				origin_center: true
+			},
+			{
+				obj_type: 'sound',
+				file: "sound/incorrect.mp3",
+				trial_ends_after_audio: true
+			}
+		],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+        choices: jsPsych.NO_KEYS,
+        on_start: function(retroaction) {
+            if (jsPsych.data.getLastTrialData().values()[0].accuracy == true) {
+                retroaction.stimuli[0].file = "img/crochet.png",
+                retroaction.stimuli[1].file = "sound/correct.mp3";
+            }
+        }
+    }
+    
+    var reponse = {
+        type: 'psychophysics',
+        stimuli: [
+			{
+				obj_type: 'sound',
+				file: "sound/voici_la_bonne_reponse.mp3"
+			},
+			{
+				obj_type: 'text',
+				content: '+',
+				font: "40px Arial"
+			},
+			{
+				obj_type: 'sound',
+				file: jsPsych.timelineVariable('phrase'),
+				show_start_time: 2482,
+				trial_ends_after_audio: true
+			},
+			{
+				obj_type: 'image',
+				file: jsPsych.timelineVariable('bonne_image'),
+				startX: 0,
+				startY: 0,
+				origin_center: true,
+				show_start_time: 2482
+			}
+		],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS
+    }
+
+//Bloc 1
+
+	var procedure_bloc1 = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_bloc1
+	}
+	timeline.push(procedure_bloc1);
+
+//Pause
+
+	var instructions6 = {
+		type: 'audio-keyboard-response',
+		stimulus: "sound/instructions6.m4a",
+		prompt: '<span style="font-size:40px;"font-family:arial;">+</span>',
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	timeline.push(instructions6);
+	
+    timeline.push(fleches);
+
+//Bloc 2
+
+	var procedure_bloc2 = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_bloc2
+	}
+	timeline.push(procedure_bloc2);
+
+//Fin
+
+    var fin = {
+        type: 'html-keyboard-response',
+        stimulus: '<span style="font-size:20px;"font-family:arial;">Merci!</span>'
+    }
+    timeline.push(fin);
+
+    jsPsych.init({
+        timeline: timeline,
+        preload_audio: audio,
+        preload_images: images,
+ 		use_webaudio: false,
+        on_finish: function() {
+			jsPsych.data.displayData('csv');
+		}
+    })
+
+    </script>
+</html>
