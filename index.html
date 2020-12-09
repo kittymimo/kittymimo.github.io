@@ -52,6 +52,14 @@
     
     audio.push('sound/instructions1.m4a', 'sound/instructions2.m4a', 'sound/instructions3.m4a', 'sound/instructions4.m4a', 'sound/instructions5.m4a', 'sound/incorrect.mp3', 'sound/correct.mp3', 'sound/voici_la_bonne_reponse.mp3');
 
+//Début
+	    
+    var debut = {
+        type: 'html-keyboard-response',
+        stimulus: '<span style="font-size:40px;"font-family:arial;">Appuyez sur n&#039importe quelle touche.</span>'
+    }
+    timeline.push(debut);
+
 //Instructions pour les flèches
 
     var instructions1 = {
@@ -343,7 +351,9 @@
 		timeline_variables: stimuli
 	}
 	timeline.push(procedure_test);
-    
+
+//Fin
+
     var fin = {
         type: 'html-keyboard-response',
         stimulus: '<span style="font-size:40px;"font-family:arial;">Merci!</span>'
