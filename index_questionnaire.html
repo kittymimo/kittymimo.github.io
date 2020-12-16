@@ -183,7 +183,7 @@ timeline.push(q6);
 
 var q7 = {
     type: 'html-button-response',
-    stimulus: '<p>7.<b> Votre enfant a-t-il(-elle) déjà reçu un diagnostic de trouble neurodéveloppemental (p. ex. : déficit d’attention, trouble du langage, trouble d’apprentissage)?</b></p>',
+    stimulus: '<p> 7.<b> Votre enfant a-t-il(-elle) déjà reçu un diagnostic de trouble neurodéveloppemental (p. ex. : déficit d’attention, trouble du langage, trouble d’apprentissage)?</b></p>',
     choices: ['Oui', 'Non'],
     on_finish: function(data){
 	if(data.button_pressed == 0){
@@ -251,8 +251,12 @@ timeline.push(q12);
 
 var concours = {
 	type: 'html-keyboard-response',
-	stimulus: '<p>Vous avez terminé l’expérience. Merci beaucoup de votre participation. &#128512 <br><br> Pour participer au tirage de la carte-cadeau Renaud-Bray, <a target="_blank" href="https://fr.surveymonkey.com/r/V6DHCZ7"> cliquez sur ce lien.</a></p>',
-	choices: jsPsych.NO_KEYS
+	stimulus: '<p>Vous avez terminé l’expérience. Merci beaucoup de votre participation! &#128512 <br><br> Pour participer au tirage de la carte-cadeau Renaud-Bray, <a target="_blank" href="https://fr.surveymonkey.com/r/V6DHCZ7"> cliquez sur ce lien.</a></p>',
+  choices: jsPsych.NO_KEYS,
+  on_load: function() {
+  jsPsych.data.displayData();
+  jsPsych.setProgressBar(1)
+}
 }
 timeline.push(concours);
 
@@ -261,9 +265,9 @@ timeline.push(concours);
         show_progress_bar: true,
         message_progress_bar: 'Progression',
  		use_webaudio: false,
-        on_finish: function() {
-			jsPsych.data.displayData();
-		}
+     on_finish: function() {
+      jsPsych.data.displayData();
+}
     })
 
 	</script>
