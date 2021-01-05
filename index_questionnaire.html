@@ -76,31 +76,6 @@
 
 timeline.push(formulaire_consentement);
 
-
-var eligibilite = {
-  type: 'survey-multi-select',
-   		questions: [
-      {
-
-        prompt:  "<b>Voici les critères d’éligibilité à cette étude.</b><br> "+
-        "<div class='justified'>Si l’une de ses affirmations ne s’applique pas à votre enfant, votre enfant ne peut malheureusement pas participer.<br>"+
-        '<br>• La langue maternelle de votre enfant (la première langue qu’il ou elle a apprise et qu’il ou elle parle toujours) doit être le français.<br>'+
-        '<br>• Votre enfant doit avoir une vue normale ou corrigée à la normale avec des lunettes ou verres de contact, par exemple.<br>'+
-        '<br>• Votre enfant doit avoir une ouïe normale ou corrigée à la normale, avec un appareil auditif, par exemple.<br>'+
-        '<br>• Votre enfant ne doit pas avoir déjà reçu un diagnostic de trouble neurodéveloppemental (p. ex. : déficit d’attention, trouble du langage, trouble d’apprentissage).<br>'+
-        '<br>• Votre enfant ne doit pas avoir déjà subi un traumatisme crânien.<br></div>',
-        options: ["Oui, je confirme que mon enfant correspond à ces critères"], 
-        required: true,
-        horizontal: true,
-        name: 'Eligibilite',
-        required_message: 'Vous devez accepter pour continuer.',
-        button_label: 'Continuer'
-      }, 
-    ], 
-    randomize_question_order: false
-}
-timeline.push(eligibilite);
-
 var q1 = {
     	type: 'survey-multi-select',
    		questions: [
