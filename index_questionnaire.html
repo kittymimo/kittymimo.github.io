@@ -76,21 +76,14 @@
 
 timeline.push(formulaire_consentement);
 
+var page_1_options = ["Fille", "Garçon", "Autre"];
+
 var q1 = {
-    	type: 'survey-multi-select',
-   		questions: [
-      {
-        prompt: "<p> 1.<b> Quel est le sexe de votre enfant?</b></p>",
-        options: ["Fille", "Garçon","Autre" ],
-        required: true,
-        horizontal: true,
-        name: 'sexe',
-        required_message: 'Veuillez remplir ce champ. ',
-        button_label: 'Suivant'
-      }, 
-    ], 
-    randomize_question_order: false
-}
+  type: 'survey-multi-choice',
+  questions: [
+    {prompt: "<p> 1.<b> Quel est le sexe de votre enfant?</b></p>", name: 'sexe', options: page_1_options, required:true, horizontal: true}, 
+  ],
+};
 timeline.push(q1);
 
 var q2 = {
@@ -101,38 +94,24 @@ var q2 = {
 		};
 timeline.push(q2);
 
+var page_2_options = ["1ère année", "2e année","3e année", "4e année", "5e année", "6e année"];
+
 var q3 = {
-    	type: 'survey-multi-select',
-   		questions: [
-      {
-        prompt: "<p>3.<b> Quel est le niveau scolaire actuel de votre enfant?</b><p/>",
-        options: ["1ère année", "2e année","3e année", "4e année", "5e année", "6e année" ],
-        required: true,
-        horizontal: true,
-        name: 'niveau_scolaire',
-        required_message: 'Veuillez remplir ce champ.',
-        button_label: 'Suivant'
-      }, 
-    ], 
-    randomize_question_order: false
-}
+  type: 'survey-multi-choice',
+  questions: [
+    {prompt: "<p>3.<b> Quel est le niveau scolaire actuel de votre enfant?</b><p/>", name: 'niveau_scolaire', options: page_2_options, required:true, horizontal: true}, 
+  ],
+};
 timeline.push(q3);
 
+var page_3_options = ["Droite", "Gauche","Ambidextre"];
+
 var q4 = {
-    	type: 'survey-multi-select',
-   		questions: [
-      {
-        prompt: " <p>4.<b> Quelle main votre enfant utilise-t-il(-elle) pour écrire?</b><p/>",
-        options: ["Droite", "Gauche","Ambidextre"],
-        required: true,
-        horizontal: true,
-        name: 'main_dominante',
-        required_message: 'Veuillez remplir ce champ.',
-        button_label: 'Suivant'
-      }, 
-    ], 
-    randomize_question_order: false
-}
+  type: 'survey-multi-choice',
+  questions: [
+    {prompt: "<p>4.<b> Quelle main votre enfant utilise-t-il(-elle) pour écrire?</b><p/>", name: 'main_dominante', options: page_3_options, required:true, horizontal: true}, 
+  ],
+};
 timeline.push(q4);
 
 var q5 = {
@@ -204,12 +183,12 @@ var q10 = {
 };
 timeline.push(q10);
 
-var page_1_options = ["Secondaire II ou moins", "Secondaire III ou IV, ou secondaire V non complété", "Diplôme d’études secondaires, ou études postsecondaires non complétées", "Diplôme, certificat ou attestation de métier (p. ex., diplôme d’études professionnelles)", "Diplôme, certificat ou attestation d’études collégiales, ou diplôme, certificat ou attestation universitaire de 1er cycle inférieur au baccalauréat", " Baccalauréat", "Diplôme, certificat ou attestation universitaire de 2e ou 3e cycle"];
+var page_1_options = ["Secondaire II ou moins", "Secondaire III ou IV, ou secondaire V non complété", "Diplôme d’études secondaires, ou études postsecondaires non complétées", "Diplôme, certificat ou attestation de métier (p. ex., diplôme d’études professionnelles)", "Diplôme, certificat ou attestation d’études collégiales, ou diplôme, certificat ou attestation universitaire <br> &nbsp &nbsp &nbsp de 1er cycle inférieur au baccalauréat", " Baccalauréat", "Diplôme, certificat ou attestation universitaire de 2e ou 3e cycle"];
 
 var q11 = {
   type: 'survey-multi-choice',
   questions: [
-    {prompt: "<p><div class='center'>11.<b> Quel est le plus haut niveau d’éducation que vous (ou l’autre parent de votre enfant) avez atteint?</b></div><p/>", name: 'Niveau_education_parents', options: page_1_options, required:true}, 
+    {prompt: "<p>11.<b> Quel est le plus haut niveau d’éducation que vous (ou l’autre parent de votre enfant) avez atteint?</b></div><p/>", name: 'Niveau_education_parents', options: page_1_options, required:true}, 
   ],
 };
 timeline.push(q11);
@@ -219,7 +198,7 @@ var page_1_options = ["Moins de 10 000 $", "De 10 000 $ à 19 999 $", "De 20 000
 var q12 = {
   type: 'survey-multi-choice',
   questions: [
-    {prompt: "<p><div class='center'>12.<b> Quel est votre revenu annuel familial, avant imposition (incluant toutes les sources de revenus)?</b></div><p/>", name: 'Revenu_annuel', options: page_1_options, required: true}
+    {prompt: "<p>12.<b> Quel est votre revenu annuel familial, avant imposition (incluant toutes les sources de revenus)?</b></div><p/>", name: 'Revenu_annuel', options: page_1_options, required: true}
   ],
 };
 timeline.push(q12);
