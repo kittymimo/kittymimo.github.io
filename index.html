@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Recherche sur le langage et les émotions</title>
+        <meta charset="UTF-8">
+        <script src="jspsych-6.1.0/jspsych.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-select.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-audio-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-psychophysics.js"></script>
+        <script src="stimuli_v1-test.js"></script>
+        <script src="stimuli_v2-test.js"></script>
+        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body></body>
+    <script>
+
+  	var timeline = [];
+  	
+// Version
+    var version = jsPsych.randomization.sampleWithoutReplacement([1,2],1)[0];
+
+    var stimuli_pratique;
+        if (version == 1) {
+            stimuli_pratique = stimuli_pratique_v1;
+        } else {
+            stimuli_pratique = stimuli_pratique_v2;
+        }
+        
+    var stimuli_bloc1;
+        if (version == 1) {
+            stimuli_bloc1 = stimuli_bloc1_v1;
+        } else {
+            stimuli_bloc1 = stimuli_bloc1_v2;
+        }
+        
+    var stimuli_bloc2;
+        if (version == 1) {
+            stimuli_bloc2 = stimuli_bloc2_v1;
+        } else {
+            stimuli_bloc2 = stimuli_bloc2_v2;
+        }
+  	
+//Chargements des sons et des images
+  
+	var audio = [];
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	audio.push(stimuli_pratique[i].phrase);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	audio.push(stimuli_bloc1[i].phrase);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	audio.push(stimuli_bloc2[i].phrase);
+    }
+
+	var images = [];
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image1);
+    }
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image2);
+    }
+    for (var i=0; i<stimuli_pratique.length; i++) {
+    	images.push(stimuli_pratique[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image1);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image2);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc1.length; i++) {
+    	images.push(stimuli_bloc1[i].bonne_image);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image1);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image2);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].image3);
+    }
+    for (var i=0; i<stimuli_bloc2.length; i++) {
+    	images.push(stimuli_bloc2[i].bonne_image);
+    }
+    
+    images.push(
+    	"img/clavier.png",
+    	"img/fleches.png",
+    	"img/gauche.png",
+    	"img/bas.png",
+    	"img/droite.png",
+    	"img/x.png",
+    	"img/crochet.png"
+    );
+    
+    audio.push(
+    	"sound/instructions0.wav",
+    	"sound/instructions1.wav",
+    	"sound/instructions2.wav",
+    	"sound/instructions3.wav",
+    	"sound/instructions4.wav",
+    	"sound/instructions5.wav",
+    	"sound/instructions6.wav",
+    	"sound/instructions7.wav",
+    	"sound/incorrect.mp3",
+    	"sound/correct.mp3",
+    	"sound/voici_la_bonne_reponse.wav",
+    	"sound/voici_la_bonne_reponse_de_nouveau.wav"
+    );
+
+// Formulaire d'information et de consentement
+
+	var consentement = {
+		type: "survey-multi-select",
+   		questions: [
+			{
+				prompt:
+					"<div style='text-align:center;margin-top:50px;'>"+
+					"<b>FORMULAIRE D’INFORMATION ET DE CONSENTEMENT</b><br />"+
+					"<br />"+
+					"</div>"+
+					"<div style='text-align:justify;margin-left:50px;margin-right:50px;'>"+
+					"<b>Titre du projet</b> : Effet des émotions sur l’apprentissage syntaxique chez les enfants<br />"+
+					"<br />"+
+					"<b>Mené par</b> : Myriam Michaud, "+
+					"étudiante au baccalauréat en psychologie à l’Université du Québec à Trois-Rivières<br />"+
+					"<br />"+
+					"<b>Sous la direction de</b> : Simon Rigoulot, "+
+					"professeur au Département de psychologie de l’Université du Québec à Trois-Rivières, "+
+					"et Catherine Mimeau, chercheuse au Département de psychologie de l’Université du Québec à Trois-Rivières<br />"+
+					"<br />"+
+					"<b>Source de financement</b> : Fonds de démarrage de l’Université du Québec à Trois-Rivières (Simon Rigoulot)<br />"+
+					"<br />"+
+					"<b>Déclaration de conflit d’intérêts</b> : Aucun conflit d’intérêts à déclarer<br />"+
+					"<br />"+
+					"<b>Préambule</b><br />"+
+					"La participation de votre enfant [ou de la personne dont vous avez la charge] à la recherche, "+
+					"qui vise à mieux comprendre l’effet des émotions sur la performance à une tâche langagière, "+
+					"serait grandement appréciée. "+
+					"Cependant, avant d’accepter que votre enfant [ou la personne dont vous avez la charge] participe à ce projet, "+
+					"veuillez prendre le temps de lire ce formulaire. "+
+					"Il vous aidera à comprendre ce qu’implique l’éventuelle participation "+
+					"de votre enfant [ou de la personne dont vous avez la charge] à la recherche "+
+					"de sorte que vous puissiez prendre une décision éclairée à ce sujet.<br />"+
+					"<br />"+
+					"Ce formulaire peut contenir des mots que vous ne comprenez pas. "+
+					"Nous vous invitons à poser toutes les questions que vous jugerez utiles "+
+					"à la chercheuse responsable de ce projet de recherche ou à un membre de son équipe de recherche. "+
+					"Sentez-vous libre de leur demander de vous expliquer tout mot ou renseignement qui n’est pas clair. "+
+					"Prenez tout le temps dont vous avez besoin pour lire et comprendre ce formulaire avant de prendre votre décision.<br />"+
+					"<br />"+
+					"<b>Objectifs et résumé du projet de recherche</b><br />"+
+					"L’objectif de ce projet de recherche est de mieux comprendre "+
+					"l’influence des émotions sur l’apprentissage de la structure de phrases d’une langue étrangère "+
+					"chez des élèves de la première à la sixième année du primaire. "+
+					"Pour ce faire, votre enfant [ou la personne dont vous avez la charge] devra réaliser une tâche langagière "+
+					"dans laquelle des phrases et des images véhiculant différentes émotions seront présentées.<br />"+
+					"<br />"+
+					"<b>Nature et durée de votre participation</b><br />"+
+					"L’étude est d’une durée totale d’environ 20 minutes. "+
+					"Pour participer au projet, votre enfant [ou la personne dont vous avez la charge] doit "+
+					"être entre la première et la sixième année du primaire, "+
+					"habiter au Québec, "+
+					"avoir le français comme langue maternelle, "+
+					"ne pas avoir subi de traumatisme crânien, "+
+					"ne pas avoir reçu de diagnostic de trouble neurodéveloppemental "+
+					"(p. ex., déficit d’attention, trouble du langage, trouble d’apprentissage), "+
+					"et avoir une vue et une ouïe normales ou corrigées à la normale. <br />"+
+					"<br />"+
+					"Avant le déroulement de la tâche langagière, "+
+					"vous devrez répondre à un questionnaire confidentiel développé par nos soins, "+
+					"qui permettra de recueillir des informations générales sur vous "+
+					"(niveau d’éducation, revenu annuel familial) "+
+					"et votre enfant [ou la personne dont vous avez la charge] "+
+					"(sexe, date de naissance, niveau scolaire, préférence manuelle) "+
+					"et de déterminer si votre enfant [ou la personne dont vous avez la charge] est éligible à l’étude. "+
+					"La durée du questionnaire ne devrait pas excéder 2 minutes.<br />"+
+					"<br />"+
+					"Dans la tâche langagière, votre enfant [ou la personne dont vous avez la charge] "+
+					"devra écouter des phrases et identifier quelle image, parmi un choix de trois, décrit la phrase donnée. "+
+					"Une rétroaction lui sera donnée après la présentation de chacune des phrases. "+
+					"Certaines phrases contiendront des mots à connotation émotionnelle "+
+					"et les images représenteront des visages avec des expressions faciales positives, négatives et neutres. "+
+					"La tâche durera environ 15 minutes. "+
+					"<b>Dans cette partie, il sera important de laisser votre enfant [ou la personne dont vous avez la charge] "+
+					"répondre par lui-(elle-)même, sans intervenir, et de s’assurer de sa concentration sur la tâche. </b>"+
+					"Une pause sera intégrée au milieu de la tâche. "+
+					"À la fin de la tâche, votre enfant [ou la personne dont vous avez la charge] "+
+					"devra indiquer (avec votre aide, au besoin) la stratégie qu’il ou elle a utilisée pour répondre aux questions.<br />"+
+					"<br />"+
+					"<b>Risques et inconvénients</b><br />"+
+					"Aucun risque spécifique n’est associé à la participation de votre enfant [ou de la personne dont vous avez la charge]. "+
+					"Les seuls risques possibles sont la fatigue ou l’ennui lié à l’écoute de nombreuses phrases, "+
+					"ainsi que le temps consacré au projet, soit environ 20 minutes. "+
+					"Afin de minimiser la fatigue et l’ennui, une pause sera intégrée à la tâche.<br />"+
+					"<br />"+
+					"Si la passation de la tâche engendre certains questionnements ou inconforts "+
+					"dont vous ou votre enfant [ou la personne dont vous avez la charge] aimeriez discuter, "+
+					"vous pourrez contacter la chercheuse responsable du projet, Myriam Michaud (myriam.michaud2@uqtr.ca), "+
+					"ou les superviseurs de la recherche, Simon Rigoulot (simon.rigoulot@uqtr.ca) "+
+					"et Catherine Mimeau (catherine.mimeau@uqtr.ca), qui vous guideront vers des ressources appropriées.<br />"+
+					"<br />"+
+					"<b>Avantages ou bénéfices</b><br />"+
+					"La participation de votre enfant [ou de la personne dont vous avez la charge] à l’étude "+
+					"contribuera à l’avancement des connaissances dans les domaines du langage et de la cognition.<br />"+
+					"<br />"+
+					"<b>Compensation ou incitatif</b><br />"+
+					"Afin de remercier les participants pour leur temps, "+
+					"une carte-cadeau de 50 $ chez Renaud-Bray sera remise au hasard à deux d’entre eux. "+
+					"Les chances de gagner sont d’environ 1 sur 25. "+
+					"Après que votre enfant [ou la personne dont vous avez la charge] ait complété la tâche langagière, "+
+					"il vous sera possible de remplir un formulaire demandant votre nom et un moyen de vous contacter "+
+					"(numéro de téléphone ou adresse courriel). "+
+					"Nous entrerons en contact avec le parent du participant gagnant "+
+					"et la carte-cadeau lui sera ensuite envoyée par la poste.<br />"+
+					"<br />"+
+					"<b> Confidentialité</b><br />"+
+					"Les données recueillies dans cette étude sont entièrement confidentielles "+
+					"et ne pourront en aucun cas mener à l’identification de votre enfant [ou de la personne dont vous avez la charge]. "+
+					"La confidentialité sera assurée grâce à un identifiant numérique. "+
+					"Les résultats de la recherche, qui pourront être diffusés sous forme "+
+					"de travaux écrits, d’affiches, d’articles scientifiques ou de communications à des congrès, "+
+					"ne permettront pas d’identifier les participants.<br />"+
+					"<br />"+
+					"Les données recueillies seront conservées dans une base de données protégée par un mot de passe. "+
+					"Les seules personnes qui y auront accès seront la responsable de la recherche "+
+					"ainsi que les deux superviseurs de la recherche. "+
+					"Toutes ces personnes ont signé un engagement à la confidentialité. "+
+					"Les données seront détruites au plus tard cinq ans après la diffusion des résultats du projet, soit en 2026. "+
+					"Les données ne seront pas utilisées à d’autres fins que celles décrites dans le présent document.<br />"+
+					"<br />"+
+					"<b>Particpation volontaire</b><br />"+
+					"La participation à cette étude se fait sur une base volontaire. "+
+					"Votre enfant [ou la personne dont vous avez la charge] est entièrement libre de participer ou non, "+
+					"de refuser de répondre à certaines questions et de se retirer en tout temps sans préjudice "+
+					"et sans avoir à fournir d’explications. "+
+					"Vous êtes également entièrement libre d’accepter ou de refuser "+
+					"que votre enfant [ou la personne dont vous avez la charge] participe à la recherche "+
+					"sans avoir à motiver votre décision ni à subir quelque préjudice que ce soit. "+
+					"Le fait de participer ou non n’aura pas de conséquences sur le dossier académique "+
+					"de votre enfant [ou de la personne dont vous avez la charge]. "+
+					"Cependant, comme il nous est impossible de retracer les données d’un participant précis, "+
+					"il ne sera pas possible de retirer les données déjà accumulées.<br />"+
+					"<br />"+
+					"<b>Responsable de la recherche</b><br />"+
+					"Pour obtenir de plus amples renseignements ou pour toute question concernant ce projet de recherche, "+
+					"vous pouvez communiquer avec Myriam Michaud (myriam.michaud2@uqtr.ca), "+
+					"responsable de la recherche et étudiante au baccalauréat en psychologie à l’Université du Québec à Trois-Rivières, "+
+					"avec Simon Rigoulot (simon.rigoulot@uqtr.ca), "+
+					"professeur au Département de psychologie de l’Université du Québec à Trois-Rivières, "+
+					"ou avec Catherine Mimeau (catherine.mimeau@uqtr.ca), "+
+					"chercheuse au Département de psychologie de l’Université du Québec à Trois-Rivières.<br />"+
+					"<br />"+
+					"<b>Surveillance des aspects éthique de la recherche</b><br />"+
+					"Cette recherche est approuvée par le comité d’éthique de la recherche avec des êtres humains "+
+					"de l’Université du Québec à Trois-Rivières "+
+					"et un certificat portant le numéro [no de certificat] a été émis le [date d’émission].<br />"+
+					"<br />"+
+					"Pour toute question ou plainte d’ordre éthique concernant cette recherche, "+
+					"vous devez communiquer avec le secrétariat du comité d’éthique de la recherche "+
+					"de l’Université du Québec à Trois-Rivières, "+
+					"par téléphone (819 376-5011, poste 2129) ou par courriel (cereh@uqtr.ca).<br />"+
+					"<br />"+
+					"<b>Engagement de la chercheuse</b><br />"+
+					"Moi, Myriam Michaud, m’engage à procéder à cette étude conformément à toutes les normes éthiques "+
+					"qui s’appliquent aux projets comportant des participants humains.<br />"+
+					"<br />"+
+					"<b>CONSENTEMENT DU PARENT [ou tuteur ou curateur]</b><br />"+
+					"En cochant la case de participation, vous indiquez :<br />"+
+					"• avoir lu l’information;<br />"+
+					"• être d’accord à ce que votre enfant [ou la personne dont vous avez la charge] participe à l’étude."+
+					"</div>",
+				options: ["Oui, j'accepte que mon enfant participe."], 
+				required: true
+			}
+		]
+	};
+	
+	var contact = {
+		type: "survey-text",
+		questions: [
+			{prompt:
+				"<div style='text-align:center;margin-top:50px;'>"+
+				"<b>PARTICIPATION À DES ÉTUDES ULTÉRIEURES</b><br />"+
+				"<br />"+
+				"</div>"+
+				"<div style='text-align:justify;margin-left:50px;margin-right:50px;'>"+
+				"Acceptez-vous que la chercheuse responsable du projet ou un membre de son équipe de recherche "+
+				"prenne contact avec vous pour vous proposer de participer à d’autres projets de recherche? "+
+				"Bien sûr, lors de chaque prise de contact, vous serez libre "+
+				"d’accepter ou de refuser de participer au projet de recherche proposé.<br />"+
+				"<br />"+
+				"Si vous acceptez que l'on prenne contact avec vous, veuillez laisser un moyen pour vous contacter. "+
+				"Autrement, appuyez sur le bouton « Continuer »."+
+				"</div>", 
+			placeholder: "Adresse courriel ou numéro de téléphone", 
+			columns: 60
+			},
+		],
+	};
+	
+	var procedure_formulaire = {
+		timeline: [consentement, contact]
+	}
+	timeline.push(procedure_formulaire);
+
+// 	Questionnaire général
+
+	var q1 = {
+		type: "survey-multi-choice",
+		questions: [
+			{prompt: "<b>Quel est le sexe de votre enfant?</b>",
+			options: ["Fille", "Garçon", "Autre"],
+			required: true
+			}
+		],
+	};
+
+	var q2 = {
+		type: "survey-html-form",
+		preamble: "<b>Quelle est la date de naissance de votre enfant?</b>",
+		html: "<p><input type='text', placeholder='jj/mm/aaaa', required pattern='(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}'/></p>"
+	};
+
+	var q3 = {
+		type: "survey-multi-choice",
+		questions: [
+			{prompt: "<b>Quel est le niveau scolaire actuel de votre enfant?</b>",
+				options: [
+					"1<sup>re</sup> année",
+					"2<sup>e</sup> année",
+					"3<sup>e</sup> année",
+					"4<sup>e</sup> année",
+					"5<sup>e</sup> année",
+					"6<sup>e</sup> année"
+				],
+				required: true,
+			},
+		],
+	};
+	
+	var q4 = {
+		type: "survey-multi-choice",
+		questions: [
+			{prompt: "<b>Quelle main votre enfant utilise-t-il(-elle) pour écrire?</b>",
+				options: ["Droite", "Gauche","Les deux (ambidextre)"],
+				required: true,
+			},
+		],
+	};
+	
+	var q5 = {
+    	type: "html-button-response",
+    	stimulus:
+    		"<p><b>Votre enfant habite-t-il(-elle) au Québec?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 1){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant doit habiter au Québec.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q6 = {
+    	type: "html-button-response",
+    	stimulus:
+    		"<p><b>La langue maternelle de votre enfant (la première langue qu’il <br />"+
+    		"ou elle a apprise et comprend toujours) est-elle le français?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 1){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant doit avoir le français comme langue maternelle.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q7 = {
+		type: "survey-text",
+		questions: [
+			{prompt: "<b>S'il y a lieu, indiquez les autres langues que votre enfant connaît.</b>",
+				placeholder: "Autre(s) langue(s) connue(s)",
+				columns: 60,
+				required: false
+			},
+		],
+	};
+	
+	var q8 = {
+    	type: "html-button-response",
+    	stimulus:
+    		"<p><b>Votre enfant a-t-il(-elle) déjà reçu un diagnostic de trouble neurodéveloppemental<br />"+
+    		"(p. ex., déficit d’attention, trouble du langage, trouble d’apprentissage)?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 0){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant ne doit pas avoir reçu de diagnostic de trouble neurodéveloppemental.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q9 = {
+    	type: "html-button-response",
+    	stimulus: "<p><b>Votre enfant a-t-il(-elle) déjà subi un traumatisme crânien?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 0){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant ne doit pas avoir subi de traumatisme crânien.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q10 = {
+    	type: "html-button-response",
+    	stimulus:
+    		"<p><b>Votre enfant a-t-il(-elle) une vue normale ou corrigée à la normale<br />"+
+    		"(p. ex., avec des lunettes ou des verres de contact)?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 1){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant doit avoir une vue normale ou corrigée à la normale.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q11 = {
+    	type: "html-button-response",
+    	stimulus:
+    		"<p><b>Votre enfant a-t-il(-elle) une ouïe normale ou corrigée à la normale<br />"+
+    		"(p. ex., avec un appareil auditif)?</b></p>",
+    	choices: ["Oui", "Non"],
+    	on_finish: function(data){
+			if(data.button_pressed == 1){
+				jsPsych.endExperiment(
+					"Pour être éligible à l’étude, votre enfant doit avoir une ouïe normale ou corrigée à la normale.<br />"+
+					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+					"Merci pour votre temps!"
+				);
+			}
+		}
+	};
+	
+	var q12 = {
+		type: "survey-multi-choice",
+		questions: [
+			{prompt:
+				"<b>Quel est le plus haut niveau d’éducation que vous (ou l’autre parent<br />"+
+				"de votre enfant) ayez atteint?</b>",
+				options: [
+					"Aucun diplôme",
+					"Diplôme d’études secondaires",
+					"Diplôme, certificat ou attestation de métier",
+					"Diplôme, certificat ou attestation d’études collégiales",
+					"Diplôme, certificat ou attestation universitaire de 1<sup>er</sup> cycle",
+					"Diplôme, certificat ou attestation universitaire de 2<sup>e</sup> ou 3<sup>e</sup> cycle"
+				],
+				required: true,
+			},
+		],
+	};
+	
+	var q13 = {
+		type: "survey-multi-choice",
+		questions: [
+			{prompt:
+				"<b>Quel est votre revenu annuel familial, avant imposition<br />"+
+				"(incluant toutes les sources de revenu)?</b>",
+				options: [
+					"Moins de 10 000 $",
+					"De 10 000 $ à 19 999 $",
+					"De 20 000 $ à 29 999 $",
+					"De 30 000 $ à 39 999 $",
+					"De 40 000 $ à 49 999 $",
+					"De 50 000 $ à 59 999 $",
+					"De 60 000 $ à 69 999 $",
+					"De 70 000 $ à 79 999 $",
+					"De 80 000 $ à 89 999 $",
+					"De 90 000 $ à 99 999 $",
+					"100 000 $ ou plus",
+					"Refus de répondre"
+				],
+				required: true,
+			},
+		],
+	};
+	
+	var procedure_questionnaire = {
+		timeline: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13]
+	}
+	timeline.push(procedure_questionnaire);
+
+//Instructions au parent
+	    
+	var instructions_parent_1 = {
+        type: "html-button-response",
+        stimulus:
+			"<b>INSTRUCTIONS AU PARENT</b><br />"+
+			"<br />"+
+			"Votre enfant peut maintenant prendre place devant l'ordinateur.<br />"+
+			"<br />"+
+			"Lorsque votre enfant est prêt(e), appuyez sur le bouton « Continuer » pour faire un test de son.<br />"+
+			"<br />",
+		choices: ["Continuer"]
+    }
+    
+    var test_audio = {
+    	type: "audio-button-response",
+    	stimulus: "sound/instructions0.wav",
+    	choices: ["Rejouer", "Continuer"],
+    	prompt: 
+    		"<b>INSTRUCTIONS AU PARENT</b><br />"+
+			"<br />"+
+    		"Ajustez le volume de l'ordinateur pour que votre enfant entende bien les instructions.<br />"+
+    		"<br />"+
+    		"<br />"+
+    		"<br />",
+    	button_html: [
+    		"<button class='jspsych-btn' style='position:absolute;left:44%;top:55%'>%choice%</button>",
+    		"<button class='jspsych-btn' style='position:absolute;left:51%;top:55%'>%choice%</button"
+    	]
+	}
+
+	var loop = {
+    	timeline: [test_audio],
+    	loop_function: function(data){
+        	if(0 == data.values()[0].button_pressed){
+            	return true;
+        	} else {
+            	return false;
+            }
+        }
+    }
+    
+    var instructions_parent_2 = {
+        type: "html-button-response",
+        stimulus:
+        	"<b>INSTRUCTIONS AU PARENT</b><br />"+
+			"<br />"+
+			"Votre enfant peut maintenant compléter la tâche langagière.<br />"+
+			"<br />"+
+			"Il est important de laisser votre enfant répondre par lui-(elle-)même, sans intervenir,<br />"+
+			"et de s’assurer de sa concentration sur la tâche.<br />"+
+			"<br />"+
+			"Lorsque votre enfant aura terminé la tâche, vous devrez l'accompagner pour répondre <br />"+
+			"à quelques questions additionnelles.<br />"+
+			"<br />"+
+			"Appuyez sur le bouton « Commencer » lorsque votre enfant est prêt(e) à commencer la tâche.<br />"+
+			"<br />",
+			choices: ["Commencer"]
+    }
+    
+    var procedure_instructions_parent = {
+		timeline: [instructions_parent_1, loop, instructions_parent_2]
+	}
+	timeline.push(procedure_instructions_parent);
+
+//Instructions pour les flèches
+
+    var instructions1 = {
+    	type: "psychophysics",
+        stimuli: [
+        	{
+        		obj_type: "sound",
+        		file: "sound/instructions1.wav",
+        		trial_ends_after_audio: true
+        	},
+        	{
+        		obj_type: "image",
+        		file: "img/clavier.png",
+        		startX: 0,
+				startY: 0,
+				origin_center: true
+        	}
+        ],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS
+    }
+    
+    var instructions2 = {
+    	type: "psychophysics",
+        stimuli: [
+        	{
+        		obj_type: "sound",
+        		file: "sound/instructions2.wav",
+        		trial_ends_after_audio: true
+        	},
+        	{
+        		obj_type: "image",
+        		file: "img/fleches.png",
+        		startX: 0,
+				startY: 0,
+				origin_center: true
+        	}
+        ],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS,
+    }
+    
+    var fleches = {
+		type: "image-keyboard-response",
+		stimulus: "img/fleches.png",
+ 		choices: [37, 40, 39]
+	}
+    
+	var instructions3 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions3.wav",
+		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	
+	var procedure_instructions_fleches = {
+		timeline: [instructions1, instructions2, fleches, instructions3, fleches]
+	}
+	timeline.push(procedure_instructions_fleches);
+
+//Instructions pour la pratique
+
+	var instructions4 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions4.wav",
+		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+
+	var procedure_instructions_pratique = {
+		timeline: [instructions4, fleches]
+	}
+	timeline.push(procedure_instructions_pratique);
+
+//Variables pour la pratique et le test
+
+	var phrase = {
+  		type: "audio-keyboard-response",
+		stimulus: jsPsych.timelineVariable("phrase"),
+ 		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	
+	var image = {
+		type: "psychophysics",
+		stimuli: [
+			{
+				obj_type: "image",
+				file: jsPsych.timelineVariable("image1"),
+				startX: -275,
+				startY: -175,
+				origin_center: true
+			},	
+			{
+				obj_type: "image",
+				file: "img/gauche.png",
+				startX: -275,
+				startY: -25,
+				origin_center: true
+			},
+			{
+				obj_type: "image",
+				file: jsPsych.timelineVariable("image2"),
+				startX: 0,
+				startY: 130,
+				origin_center: true
+			},
+			{
+				obj_type: "image",
+				file: "img/bas.png",
+				startX: 0,
+				startY: 280,
+				origin_center: true
+			},
+			{
+				obj_type: "image",
+				file: jsPsych.timelineVariable("image3"),
+				startX: 275,
+				startY: -175,
+				origin_center: true
+			},
+			{
+				obj_type: "image",
+				file: "img/droite.png",
+				startX: 275,
+				startY: -25,
+				origin_center: true
+			},
+		],
+ 		canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: [37, 40, 39],
+ 		data: {
+ 			version: jsPsych.timelineVariable("version"),
+ 			bloc: jsPsych.timelineVariable("bloc"),
+        	ordre_logique: jsPsych.timelineVariable("ordre_logique"),
+      	  	ordre_tache: jsPsych.timelineVariable("ordre_tache"),
+        	complexite: jsPsych.timelineVariable("complexite"),
+        	position_emotion: jsPsych.timelineVariable("position_emotion"),
+        	emotion: jsPsych.timelineVariable("emotion"),
+        	sexe_sujet: jsPsych.timelineVariable("sexe"),
+        	phrase: jsPsych.timelineVariable("phrase"),
+        	image1: jsPsych.timelineVariable("image1"),
+        	image2: jsPsych.timelineVariable("image2"),
+        	image3: jsPsych.timelineVariable("image3"),
+        	bonne_reponse: jsPsych.timelineVariable("bonne_reponse"),
+        	bonne_image: jsPsych.timelineVariable("bonne_image")
+		}, 
+		on_finish: function(data) {
+  			var reponse = false;
+			if (data.bonne_reponse == data.key_press) {
+				reponse = true;
+			}
+  		data.accuracy = reponse;
+       	}
+	}	
+	
+    var retroaction = {
+        type: "psychophysics",
+        stimuli: [
+        	{
+				obj_type: "image",
+				file: "img/x.png",
+				startX: 0,
+				startY: 0,
+				origin_center: true,
+				show_end_time: 1176
+			},
+			{
+				obj_type: "sound",
+				file: "sound/incorrect.mp3",
+				show_end_time: 1176
+			},
+			{
+				obj_type: "sound",
+				file: "sound/voici_la_bonne_reponse.wav",
+				show_start_time: 1176,
+				trial_ends_after_audio: true
+			},
+			{
+				obj_type: "text",
+				content: "+",
+				font: "40px arial",
+				show_start_time: 1176
+			},
+		],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+        choices: jsPsych.NO_KEYS,
+        on_start: function(retroaction) {
+            if (jsPsych.data.getLastTrialData().values()[0].accuracy == true) {
+                retroaction.stimuli[0].file = "img/crochet.png",
+                retroaction.stimuli[1].file = "sound/correct.mp3",
+                retroaction.stimuli[2].file = "sound/voici_la_bonne_reponse_de_nouveau.wav";
+            }
+        }
+    }
+    
+    var reponse = {
+        type: "psychophysics",
+        stimuli: [
+			{
+				obj_type: "sound",
+				file: jsPsych.timelineVariable("phrase"),
+				trial_ends_after_audio: true
+			},
+			{
+				obj_type: "image",
+				file: jsPsych.timelineVariable("bonne_image"),
+				startX: 0,
+				startY: 0,
+				origin_center: true
+			}
+		],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS,
+    }
+
+//Pratique
+
+	var procedure_pratique = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_pratique
+	}
+	timeline.push(procedure_pratique);
+
+//Instructions pour le test
+	
+	var instructions5 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions5.wav",
+		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+
+	var procedure_instructions_test = {
+		timeline: [instructions5, fleches]
+	}
+	timeline.push(procedure_instructions_test);
+
+//Bloc 1
+
+	var procedure_bloc1 = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_bloc1
+	}
+	timeline.push(procedure_bloc1);
+
+//Pause
+
+	var instructions6 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions6.wav",
+		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+
+	var procedure_pause = {
+		timeline: [instructions6, fleches]
+	}
+	timeline.push(procedure_pause);
+
+//Bloc 2
+
+	var procedure_bloc2 = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_bloc2
+	}
+	timeline.push(procedure_bloc2);
+
+//Utilisation de stratégie
+
+    var instructions7 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions7.wav",
+		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+    
+    var strategie = {
+		type: "survey-text",
+		questions: [
+			{prompt: "Dans l'activité que tu viens de faire, as-tu utilisé une stratégie<br />"+
+			"pour trouver les bonnes réponses? Si oui, explique-la ici.",
+				placeholder: "Stratégie utilisée",
+				rows: 5,
+				columns: 60,
+				required: false
+			},
+		],
+	};
+	
+	var procedure_strategie = {
+		timeline: [instructions7, fleches, strategie]
+	}
+	timeline.push(procedure_strategie);
+
+//Concours
+	
+	var concours = {
+    	type: "html-button-response",
+    	stimulus:
+    		"Tes réponses ont été envoyées. Merci! &#128512<br />"+
+			"<br />"+
+			"Pour participer au tirage de la carte-cadeau de Renaud-Bray, "+
+			"clique <a target='_blank' href='https://tirage.limequery.com/757228'>ici</a>.<br />"+
+			"<br />"+
+			"Appuie sur le bouton « Terminer » pour terminer l'expérience.<br />"+
+			"<br />",
+		choices: ["Terminer"],
+    	on_finish: function(data){
+			if(data.button_pressed == 0){
+				jsPsych.endExperiment();
+			}
+		}
+	};
+	timeline.push(concours);
+
+    jsPsych.init({
+        timeline: timeline,
+        preload_audio: audio,
+        preload_images: images,
+ 		use_webaudio: false,
+//        on_finish: function() {
+//			jsPsych.data.displayData('csv');
+//		}
+    })
+
+    </script>
+</html>
