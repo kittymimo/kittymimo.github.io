@@ -2548,6 +2548,7 @@ jsPsych.pluginAPI = (function() {
     if(progress_bar){
       var pb_html = "<div id='jspsych-loading-progress-bar-container' style='height: 10px; width: 300px; background-color: #ddd;'>";
       pb_html += "<div id='jspsych-loading-progress-bar' style='height: 10px; width: 0%; background-color: #777;'></div>";
+      pb_html += "<br /><div>Téléchargement en cours...</p></div>";
       pb_html += "</div>";
       jsPsych.getDisplayElement().innerHTML = pb_html;
     }

@@ -23,6 +23,10 @@
 
   	var timeline = [];
   	
+  	var count = 0;
+//	var n_trials = 36; //Avec le fichier test de stimuli
+	var n_trials = 178; //Avec le fichier complet de stimuli
+  	
 // Version
     var version = jsPsych.randomization.sampleWithoutReplacement([1,2],1)[0];
 
@@ -96,13 +100,16 @@
     }
     
     images.push(
+    	"img/instructions.png",
     	"img/clavier.png",
     	"img/fleches.png",
+    	"img/fleches_instructions.png",
     	"img/gauche.png",
     	"img/bas.png",
     	"img/droite.png",
     	"img/x.png",
-    	"img/crochet.png"
+    	"img/crochet.png",
+    	"img/exemple.jpeg"
     );
     
     audio.push(
@@ -114,6 +121,9 @@
     	"sound/instructions5.wav",
     	"sound/instructions6.wav",
     	"sound/instructions7.wav",
+    	"sound/instructions8.wav",
+    	"sound/instructions9.wav",
+    	"sound/instructions10.wav",
     	"sound/incorrect.mp3",
     	"sound/correct.mp3",
     	"sound/voici_la_bonne_reponse.wav",
@@ -285,7 +295,12 @@
 				options: ["Oui, j'accepte que mon enfant participe."], 
 				required: true
 			}
-		]
+		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var contact = {
@@ -309,10 +324,15 @@
 			columns: 60
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var procedure_formulaire = {
-		timeline: [consentement, contact]
+		timeline: [consentement, contact],
 	}
 	timeline.push(procedure_formulaire);
 
@@ -326,12 +346,22 @@
 			required: true
 			}
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 
 	var q2 = {
 		type: "survey-html-form",
 		preamble: "<b>Quelle est la date de naissance de votre enfant?</b>",
-		html: "<p><input type='text', placeholder='jj/mm/aaaa', required pattern='(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}'/></p>"
+		html: "<p><input type='text', placeholder='jj/mm/aaaa', required pattern='(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}'/></p>",
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 
 	var q3 = {
@@ -349,6 +379,11 @@
 				required: true,
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var q4 = {
@@ -359,6 +394,11 @@
 				required: true,
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var q5 = {
@@ -374,6 +414,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 0){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -391,6 +436,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 0){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -403,6 +453,11 @@
 				required: false
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var q8 = {
@@ -419,6 +474,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 1){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -434,6 +494,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 1){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -451,6 +516,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 0){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -468,6 +538,11 @@
 					"Merci pour votre temps!"
 				);
 			}
+			if(data.button_pressed == 0){
+        		count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+        	} 
 		}
 	};
 	
@@ -488,6 +563,11 @@
 				required: true,
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var q13 = {
@@ -509,10 +589,20 @@
 				required: true,
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var procedure_questionnaire = {
-		timeline: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13]
+		timeline: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13],
+		on_finish: function(data) {
+        	count++;
+            var progress = count/n_trials;
+            jsPsych.setProgressBar(progress);
+        } 
 	}
 	timeline.push(procedure_questionnaire);
 
@@ -525,9 +615,16 @@
 			"<br />"+
 			"Votre enfant peut maintenant prendre place devant l'ordinateur.<br />"+
 			"<br />"+
+			"Il est recommandé d'utiliser des écouteurs si c'est possible.<br />"+
+			"<br />"+
 			"Lorsque votre enfant est prêt(e), appuyez sur le bouton « Continuer » pour faire un test de son.<br />"+
 			"<br />",
-		choices: ["Continuer"]
+		choices: ["Continuer"],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
     }
     
     var test_audio = {
@@ -542,17 +639,20 @@
     		"<br />"+
     		"<br />",
     	button_html: [
-    		"<button class='jspsych-btn' style='position:absolute;left:44%;top:55%'>%choice%</button>",
-    		"<button class='jspsych-btn' style='position:absolute;left:51%;top:55%'>%choice%</button"
-    	]
+    		"<button class='jspsych-btn' style='position:absolute;left:44%;top:60%'>%choice%</button>",
+    		"<button class='jspsych-btn' style='position:absolute;left:51%;top:60%'>%choice%</button"
+    	],
 	}
 
-	var loop = {
+	var loop_test_audio = {
     	timeline: [test_audio],
     	loop_function: function(data){
         	if(0 == data.values()[0].button_pressed){
             	return true;
         	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
             	return false;
             }
         }
@@ -573,22 +673,35 @@
 			"<br />"+
 			"Appuyez sur le bouton « Commencer » lorsque votre enfant est prêt(e) à commencer la tâche.<br />"+
 			"<br />",
-			choices: ["Commencer"]
+			choices: ["Commencer"],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
     }
     
     var procedure_instructions_parent = {
-		timeline: [instructions_parent_1, loop, instructions_parent_2]
+		timeline: [instructions_parent_1, loop_test_audio, instructions_parent_2],
 	}
 	timeline.push(procedure_instructions_parent);
 
-//Instructions pour les flèches
+//Instructions générales
 
-    var instructions1 = {
+	var instructions1 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions1.wav",
+		prompt: "<img src='img/instructions.png'></img>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+
+    var instructions2 = {
     	type: "psychophysics",
         stimuli: [
         	{
         		obj_type: "sound",
-        		file: "sound/instructions1.wav",
+        		file: "sound/instructions2.wav",
         		trial_ends_after_audio: true
         	},
         	{
@@ -605,13 +718,12 @@
  		choices: jsPsych.NO_KEYS
     }
     
-    var instructions2 = {
+    var instructions3 = {
     	type: "psychophysics",
         stimuli: [
         	{
         		obj_type: "sound",
-        		file: "sound/instructions2.wav",
-        		trial_ends_after_audio: true
+        		file: "sound/instructions3.wav"
         	},
         	{
         		obj_type: "image",
@@ -623,43 +735,64 @@
         ],
         canvas_width: 1024,
  		canvas_height: 600,
+ 		response_start_time: 5309,
  		background_color: "FFFFFF",
- 		choices: jsPsych.NO_KEYS,
+ 		choices: [37, 40, 39],
     }
-    
-    var fleches = {
-		type: "image-keyboard-response",
-		stimulus: "img/fleches.png",
- 		choices: [37, 40, 39]
-	}
-    
-	var instructions3 = {
+
+    var instructions4 = {
 		type: "audio-keyboard-response",
-		stimulus: "sound/instructions3.wav",
-		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+		stimulus: "sound/instructions4.wav",
+		prompt: "<img src='img/instructions.png'></img>",
  		choices: jsPsych.NO_KEYS,
  		trial_ends_after_audio: true
 	}
 	
-	var procedure_instructions_fleches = {
-		timeline: [instructions1, instructions2, fleches, instructions3, fleches]
+    var fleches_instructions = {
+		type: "image-keyboard-response",
+		stimulus: "img/fleches_instructions.png",
+ 		choices: [38, 37, 40, 39]
 	}
-	timeline.push(procedure_instructions_fleches);
+	
+	var loop_instructions_generales = {
+    	timeline: [instructions1, instructions2, instructions3, instructions4, fleches_instructions],
+    	loop_function: function(data){
+        	if(38 == data.values()[4].key_press){
+            	return true;
+        	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+            	return false;
+            }
+        }
+    }
+	timeline.push(loop_instructions_generales);
 
 //Instructions pour la pratique
 
-	var instructions4 = {
+	var instructions5 = {
 		type: "audio-keyboard-response",
-		stimulus: "sound/instructions4.wav",
-		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+		stimulus: "sound/instructions5.wav",
+		prompt: "<img src='img/instructions.png'></img>",
  		choices: jsPsych.NO_KEYS,
  		trial_ends_after_audio: true
 	}
-
-	var procedure_instructions_pratique = {
-		timeline: [instructions4, fleches]
-	}
-	timeline.push(procedure_instructions_pratique);
+	
+	var loop_instructions_pratique = {
+    	timeline: [instructions5, fleches_instructions],
+    	loop_function: function(data){
+        	if(38 == data.values()[1].key_press){
+            	return true;
+        	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+            	return false;
+            }
+        }
+    }
+	timeline.push(loop_instructions_pratique);
 
 //Variables pour la pratique et le test
 
@@ -668,7 +801,7 @@
 		stimulus: jsPsych.timelineVariable("phrase"),
  		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
  		choices: jsPsych.NO_KEYS,
- 		trial_ends_after_audio: true
+ 		trial_ends_after_audio: true, 
 	}
 	
 	var image = {
@@ -808,30 +941,81 @@
  		canvas_height: 600,
  		background_color: "FFFFFF",
  		choices: jsPsych.NO_KEYS,
+ 		on_finish: function(data) {
+        	count++;
+            var progress = count/n_trials;
+            jsPsych.setProgressBar(progress);
+        }           
     }
+    
+    var fleches = {
+		type: "image-keyboard-response",
+		stimulus: "img/fleches.png",
+ 		choices: [37, 40, 39]
+	}
 
 //Pratique
 
 	var procedure_pratique = {
 		timeline: [phrase, image, retroaction, reponse, fleches],
-		timeline_variables: stimuli_pratique
+		timeline_variables: stimuli_pratique,
 	}
 	timeline.push(procedure_pratique);
 
 //Instructions pour le test
 	
-	var instructions5 = {
+	var instructions6 = {
 		type: "audio-keyboard-response",
-		stimulus: "sound/instructions5.wav",
-		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+		stimulus: "sound/instructions6.wav",
+		prompt: "<img src='img/instructions.png'></img>",
  		choices: jsPsych.NO_KEYS,
  		trial_ends_after_audio: true
 	}
 
-	var procedure_instructions_test = {
-		timeline: [instructions5, fleches]
+    var instructions7 = {
+    	type: "psychophysics",
+        stimuli: [
+        	{
+        		obj_type: "sound",
+        		file: "sound/instructions7.wav",
+        		trial_ends_after_audio: true
+        	},
+        	{
+        		obj_type: "image",
+        		file: "img/exemple.jpeg",
+        		startX: 0,
+				startY: 0,
+				origin_center: true
+        	}
+        ],
+        canvas_width: 1024,
+ 		canvas_height: 600,
+ 		background_color: "FFFFFF",
+ 		choices: jsPsych.NO_KEYS
+    }
+	
+	var instructions8 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions8.wav",
+		prompt: "<img src='img/instructions.png'></img>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
 	}
-	timeline.push(procedure_instructions_test);
+	
+	var loop_instructions_test = {
+    	timeline: [instructions6, instructions7, instructions8, fleches_instructions],
+    	loop_function: function(data){
+        	if(38 == data.values()[3].key_press){
+            	return true;
+        	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+            	return false;
+            }
+        }
+    }
+	timeline.push(loop_instructions_test);
 
 //Bloc 1
 
@@ -843,18 +1027,28 @@
 
 //Pause
 
-	var instructions6 = {
+	var instructions9 = {
 		type: "audio-keyboard-response",
-		stimulus: "sound/instructions6.wav",
-		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+		stimulus: "sound/instructions9.wav",
+		prompt: "<img src='img/instructions.png'></img>",
  		choices: jsPsych.NO_KEYS,
  		trial_ends_after_audio: true
 	}
-
-	var procedure_pause = {
-		timeline: [instructions6, fleches]
-	}
-	timeline.push(procedure_pause);
+	
+	var loop_instructions_pause = {
+    	timeline: [instructions9, fleches_instructions],
+    	loop_function: function(data){
+        	if(38 == data.values()[1].key_press){
+            	return true;
+        	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+            	return false;
+            }
+        }
+    }
+	timeline.push(loop_instructions_pause);
 
 //Bloc 2
 
@@ -866,13 +1060,27 @@
 
 //Utilisation de stratégie
 
-    var instructions7 = {
+    var instructions10 = {
 		type: "audio-keyboard-response",
-		stimulus: "sound/instructions7.wav",
-		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
+		stimulus: "sound/instructions10.wav",
+		prompt: "<img src='img/instructions.png'></img>",
  		choices: jsPsych.NO_KEYS,
  		trial_ends_after_audio: true
 	}
+	
+	var loop_instructions_strategie = {
+    	timeline: [instructions10, fleches_instructions],
+    	loop_function: function(data){
+        	if(38 == data.values()[1].key_press){
+            	return true;
+        	} else {
+            	count++;
+        		var progress = count/n_trials
+            	jsPsych.setProgressBar(progress);
+            	return false;
+            }
+        }
+    }
     
     var strategie = {
 		type: "survey-text",
@@ -885,10 +1093,15 @@
 				required: false
 			},
 		],
+		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        } 
 	};
 	
 	var procedure_strategie = {
-		timeline: [instructions7, fleches, strategie]
+		timeline: [loop_instructions_strategie, strategie]
 	}
 	timeline.push(procedure_strategie);
 
@@ -906,7 +1119,7 @@
 			"<br />",
 		choices: ["Terminer"],
     	on_finish: function(data){
-			if(data.button_pressed == 0){
+            if(data.button_pressed == 0){
 				jsPsych.endExperiment();
 			}
 		}
@@ -918,6 +1131,9 @@
         preload_audio: audio,
         preload_images: images,
  		use_webaudio: true,
+ 		show_progress_bar: true,
+    	auto_update_progress_bar: false,
+    	message_progress_bar: ""
 //        on_finish: function() {
 //			jsPsych.data.displayData('csv');
 //		}
