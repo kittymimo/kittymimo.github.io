@@ -136,6 +136,7 @@
 		type: "survey-multi-select",
    		questions: [
 			{
+				name: "consentement",
 				prompt:
 					"<div style='text-align:center;margin-top:50px;'>"+
 					"<b>FORMULAIRE D’INFORMATION ET DE CONSENTEMENT</b><br />"+
@@ -306,22 +307,24 @@
 	var contact = {
 		type: "survey-text",
 		questions: [
-			{prompt:
-				"<div style='text-align:center;margin-top:50px;'>"+
-				"<b>PARTICIPATION À DES ÉTUDES ULTÉRIEURES</b><br />"+
-				"<br />"+
-				"</div>"+
-				"<div style='text-align:justify;margin-left:50px;margin-right:50px;'>"+
-				"Acceptez-vous que la chercheuse responsable du projet ou un membre de son équipe de recherche "+
-				"prenne contact avec vous pour vous proposer de participer à d’autres projets de recherche? "+
-				"Bien sûr, lors de chaque prise de contact, vous serez libre "+
-				"d’accepter ou de refuser de participer au projet de recherche proposé.<br />"+
-				"<br />"+
-				"Si vous acceptez que l'on prenne contact avec vous, veuillez laisser un moyen pour vous contacter. "+
-				"Autrement, appuyez sur le bouton « Continuer »."+
-				"</div>", 
-			placeholder: "Adresse courriel ou numéro de téléphone", 
-			columns: 60
+			{
+				name: "contact",
+				prompt:
+					"<div style='text-align:center;margin-top:50px;'>"+
+					"<b>PARTICIPATION À DES ÉTUDES ULTÉRIEURES</b><br />"+
+					"<br />"+
+					"</div>"+
+					"<div style='text-align:justify;margin-left:50px;margin-right:50px;'>"+
+					"Acceptez-vous que la chercheuse responsable du projet ou un membre de son équipe de recherche "+
+					"prenne contact avec vous pour vous proposer de participer à d’autres projets de recherche? "+
+					"Bien sûr, lors de chaque prise de contact, vous serez libre "+
+					"d’accepter ou de refuser de participer au projet de recherche proposé.<br />"+
+					"<br />"+
+					"Si vous acceptez que l'on prenne contact avec vous, veuillez laisser un moyen pour vous contacter. "+
+					"Autrement, appuyez sur le bouton « Continuer »."+
+					"</div>", 
+				placeholder: "Adresse courriel ou numéro de téléphone", 
+				columns: 60
 			},
 		],
 		on_finish: function(data) {
@@ -341,7 +344,8 @@
 	var q1 = {
 		type: "survey-multi-choice",
 		questions: [
-			{prompt: "<b>Quel est le sexe de votre enfant?</b>",
+			{name: "sexe",
+			prompt: "<b>Quel est le sexe de votre enfant?</b>",
 			options: ["Fille", "Garçon", "Autre"],
 			required: true
 			}
@@ -356,7 +360,7 @@
 	var q2 = {
 		type: "survey-html-form",
 		preamble: "<b>Quelle est la date de naissance de votre enfant?</b>",
-		html: "<p><input type='text', placeholder='jj/mm/aaaa', required pattern='(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}'/></p>",
+		html: "<p><input name='date_naissance' type='text', placeholder='jj/mm/aaaa', required pattern='(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}'/></p>",
 		on_finish: function(data) {
         	count++;
         	var progress = count/n_trials
@@ -367,7 +371,8 @@
 	var q3 = {
 		type: "survey-multi-choice",
 		questions: [
-			{prompt: "<b>Quel est le niveau scolaire actuel de votre enfant?</b>",
+			{name: "niveau_scolaire",
+			prompt: "<b>Quel est le niveau scolaire actuel de votre enfant?</b>",
 				options: [
 					"1<sup>re</sup> année",
 					"2<sup>e</sup> année",
@@ -389,7 +394,8 @@
 	var q4 = {
 		type: "survey-multi-choice",
 		questions: [
-			{prompt: "<b>Quelle main votre enfant utilise-t-il(-elle) pour écrire?</b>",
+			{name: "preference_manuelle",
+			prompt: "<b>Quelle main votre enfant utilise-t-il(-elle) pour écrire?</b>",
 				options: ["Droite", "Gauche","Les deux (ambidextre)"],
 				required: true,
 			},
@@ -447,7 +453,9 @@
 	var q7 = {
 		type: "survey-text",
 		questions: [
-			{prompt: "<b>S'il y a lieu, indiquez les autres langues que votre enfant connaît.</b>",
+			{	
+				name: "autres_langues",
+				prompt: "<b>S'il y a lieu, indiquez les autres langues que votre enfant connaît.</b>",
 				placeholder: "Autre(s) langue(s) connue(s)",
 				columns: 60,
 				required: false
@@ -549,7 +557,9 @@
 	var q12 = {
 		type: "survey-multi-choice",
 		questions: [
-			{prompt:
+			{
+				name: "niveau_education",
+				prompt:
 				"<b>Quel est le plus haut niveau d’éducation que vous (ou l’autre parent<br />"+
 				"de votre enfant) ayez atteint?</b>",
 				options: [
@@ -573,7 +583,8 @@
 	var q13 = {
 		type: "survey-multi-choice",
 		questions: [
-			{prompt:
+			{	name: "revenu_familial",
+				prompt:
 				"<b>Quel est votre revenu annuel familial, avant imposition<br />"+
 				"(incluant toutes les sources de revenu)?</b>",
 				options: [
