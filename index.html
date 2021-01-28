@@ -14,8 +14,11 @@
         <script src="jspsych-6.1.0/plugins/jspsych-audio-keyboard-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-psychophysics.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
         <script src="stimuli_v1.js"></script>
         <script src="stimuli_v2.js"></script>
+<!--	<script src="jatos.js"></script>
+-->
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body></body>
@@ -24,8 +27,7 @@
   	var timeline = [];
   	
   	var count = 0;
-//	var n_trials = 36; //Avec le fichier test de stimuli
-	var n_trials = 78; //Avec le fichier complet de stimuli
+	var n_trials = 78;
   	
 // Version
     var version = jsPsych.randomization.sampleWithoutReplacement([1,2],1)[0];
@@ -124,11 +126,12 @@
     	"sound/instructions8.wav",
     	"sound/instructions9.wav",
     	"sound/instructions10.wav",
+    	"sound/instructions11.wav",
     	"sound/incorrect.mp3",
     	"sound/correct.mp3",
     	"sound/voici_la_bonne_reponse.wav",
     	"sound/voici_la_bonne_reponse_de_nouveau.wav"
-    );
+	);
 
 // Formulaire d'information et de consentement
 
@@ -413,13 +416,6 @@
     		"<p><b>Votre enfant habite-t-il(-elle) au Québec?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 1){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant doit habiter au Québec.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 0){
         		count++;
         		var progress = count/n_trials
@@ -428,6 +424,30 @@
 		}
 	};
 	
+	var q5_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant doit habiter au Québec.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q5_cond = {
+    	timeline: [q5_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 0){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
+	
 	var q6 = {
     	type: "html-button-response",
     	stimulus:
@@ -435,13 +455,6 @@
     		"ou elle a apprise et comprend toujours) est-elle le français?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 1){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant doit avoir le français comme langue maternelle.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 0){
         		count++;
         		var progress = count/n_trials
@@ -449,6 +462,30 @@
         	} 
 		}
 	};
+	
+	var q6_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant doit avoir le français comme langue maternelle.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q6_cond = {
+    	timeline: [q6_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 0){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
 	
 	var q7 = {
 		type: "survey-text",
@@ -475,13 +512,6 @@
     		"(p. ex., déficit d’attention, trouble du langage, trouble d’apprentissage)?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 0){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant ne doit pas avoir reçu de diagnostic de trouble neurodéveloppemental.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 1){
         		count++;
         		var progress = count/n_trials
@@ -490,18 +520,36 @@
 		}
 	};
 	
+	var q8_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant ne doit pas avoir reçu de diagnostic de trouble neurodéveloppemental.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q8_cond = {
+    	timeline: [q8_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 1){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
+
 	var q9 = {
     	type: "html-button-response",
-    	stimulus: "<p><b>Votre enfant a-t-il(-elle) déjà subi un traumatisme crânien?</b></p>",
+    	stimulus:
+    		"<p><b>Votre enfant a-t-il(-elle) déjà subi un traumatisme crânien?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 0){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant ne doit pas avoir subi de traumatisme crânien.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 1){
         		count++;
         		var progress = count/n_trials
@@ -510,6 +558,30 @@
 		}
 	};
 	
+	var q9_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant ne doit pas avoir subi de traumatisme crânien.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q9_cond = {
+    	timeline: [q9_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 1){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
+
 	var q10 = {
     	type: "html-button-response",
     	stimulus:
@@ -517,13 +589,6 @@
     		"(p. ex., avec des lunettes ou des verres de contact)?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 1){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant doit avoir une vue normale ou corrigée à la normale.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 0){
         		count++;
         		var progress = count/n_trials
@@ -532,6 +597,30 @@
 		}
 	};
 	
+	var q10_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant doit avoir une vue normale ou corrigée à la normale.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q10_cond = {
+    	timeline: [q10_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 0){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
+
 	var q11 = {
     	type: "html-button-response",
     	stimulus:
@@ -539,13 +628,6 @@
     		"(p. ex., avec un appareil auditif)?</b></p>",
     	choices: ["Oui", "Non"],
     	on_finish: function(data){
-			if(data.button_pressed == 1){
-				jsPsych.endExperiment(
-					"Pour être éligible à l’étude, votre enfant doit avoir une ouïe normale ou corrigée à la normale.<br />"+
-					"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
-					"Merci pour votre temps!"
-				);
-			}
 			if(data.button_pressed == 0){
         		count++;
         		var progress = count/n_trials
@@ -553,6 +635,30 @@
         	} 
 		}
 	};
+	
+	var q11_fin = {
+    	type: "html-keyboard-response",
+    	stimulus:
+    		"Pour être éligible à l’étude, votre enfant doit avoir une ouïe normale ou corrigée à la normale.<br />"+
+    		"<br />"+
+			"Votre enfant ne peut malheureusement pas participer à cette étude.<br />"+
+			"<br />"+
+			"Merci pour votre temps!<br />"+
+			"<br />",
+    	choices: jsPsych.NO_KEYS
+	};
+	
+	var q11_cond = {
+    	timeline: [q11_fin],
+    	conditional_function: function(){
+       		var data = jsPsych.data.get().last(1).values()[0];
+        	if(data.button_pressed == 0){
+            	return false;
+        	} else {
+            	return true;
+        	}
+    	}
+	}
 	
 	var q12 = {
 		type: "survey-multi-choice",
@@ -608,12 +714,7 @@
 	};
 	
 	var procedure_questionnaire = {
-		timeline: [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13],
-		on_finish: function(data) {
-        	count++;
-            var progress = count/n_trials;
-            jsPsych.setProgressBar(progress);
-        } 
+		timeline: [q1, q2, q3, q4, q5, q5_cond, q6, q6_cond, q7, q8, q8_cond, q9, q9_cond, q10, q10_cond, q11, q11_cond, q12, q13]
 	}
 	timeline.push(procedure_questionnaire);
 
@@ -625,9 +726,6 @@
 			"<b>INSTRUCTIONS AU PARENT</b><br />"+
 			"<br />"+
 			"Votre enfant peut maintenant prendre place devant l'ordinateur.<br />"+
-			"<br />"+
-			"La fenêtre de votre navigateur doit être agrandie au maximum pour que votre enfant<br />"+
-			"puisse compléter la tâche langagière.<br />"+
 			"<br />"+
 			"Il est recommandé d'utiliser des écouteurs si c'est possible.<br />"+
 			"<br />"+
@@ -673,9 +771,10 @@
     }
     
     var instructions_parent_2 = {
-        type: "html-button-response",
-        stimulus:
-        	"<b>INSTRUCTIONS AU PARENT</b><br />"+
+		type: 'fullscreen',
+		fullscreen_mode: true,
+		message:
+			"<b>INSTRUCTIONS AU PARENT</b><br />"+
 			"<br />"+
 			"Votre enfant peut maintenant compléter la tâche langagière.<br />"+
 			"<br />"+
@@ -686,13 +785,14 @@
 			"à quelques questions additionnelles.<br />"+
 			"<br />"+
 			"Appuyez sur le bouton « Commencer » lorsque votre enfant est prêt(e) à commencer la tâche.<br />"+
+			"La fenêtre de votre navigateur passera alors en mode plein écran.<br />"+
 			"<br />",
-			choices: ["Commencer"],
+		button_label: "Commencer",
 		on_finish: function(data) {
         	count++;
         	var progress = count/n_trials
             jsPsych.setProgressBar(progress);
-        } 
+        }
     }
     
     var procedure_instructions_parent = {
@@ -1062,18 +1162,7 @@
             }
         }
     }
-	timeline.push(loop_instructions_pause);
-
-//Bloc 2
-
-	var procedure_bloc2 = {
-		timeline: [phrase, image, retroaction, reponse, fleches],
-		timeline_variables: stimuli_bloc2
-	}
-	timeline.push(procedure_bloc2);
-
-//Utilisation de stratégie
-
+    
     var instructions10 = {
 		type: "audio-keyboard-response",
 		stimulus: "sound/instructions10.wav",
@@ -1082,8 +1171,31 @@
  		trial_ends_after_audio: true
 	}
 	
+	var procedure_pause = {
+		timeline: [loop_instructions_pause, instructions10, fleches]
+	}
+	timeline.push(procedure_pause);
+	
+//Bloc 2
+
+	var procedure_bloc2 = {
+		timeline: [phrase, image, retroaction, reponse, fleches],
+		timeline_variables: stimuli_bloc2
+	}
+	timeline.push(procedure_bloc2);
+	
+//Utilisation de stratégie
+
+    var instructions11 = {
+		type: "audio-keyboard-response",
+		stimulus: "sound/instructions11.wav",
+		prompt: "<img src='img/instructions.png'></img>",
+ 		choices: jsPsych.NO_KEYS,
+ 		trial_ends_after_audio: true
+	}
+	
 	var loop_instructions_strategie = {
-    	timeline: [instructions10, fleches_instructions],
+    	timeline: [instructions11, fleches_instructions],
     	loop_function: function(data){
         	if(38 == data.values()[1].key_press){
             	return true;
@@ -1095,6 +1207,11 @@
             }
         }
     }
+    
+    var exit_fullscreen = {
+		type: 'fullscreen',
+		fullscreen_mode: false
+	}
     
     var strategie = {
 		type: "survey-text",
@@ -1115,7 +1232,7 @@
 	};
 	
 	var procedure_strategie = {
-		timeline: [loop_instructions_strategie, strategie]
+		timeline: [loop_instructions_strategie, exit_fullscreen, strategie]
 	}
 	timeline.push(procedure_strategie);
 
@@ -1124,22 +1241,16 @@
 	var concours = {
     	type: "html-button-response",
     	stimulus:
-    		"Tes réponses ont été envoyées. Merci! &#128512<br />"+
+			"Merci! &#128512<br />"+
 			"<br />"+
-			"Pour participer au tirage de la carte-cadeau de Renaud-Bray, "+
-			"clique <a target='_blank' href='https://tirage.limequery.com/757228'>ici</a>.<br />"+
+			"Appuie sur le bouton « Envoyer » pour envoyer tes réponses.<br />"+
 			"<br />"+
-			"Appuie sur le bouton « Terminer » pour terminer l'expérience.<br />"+
+			"Tu seras ensuite redirigé(e) vers la page du tirage.<br />"+
 			"<br />",
-		choices: ["Terminer"],
-    	on_finish: function(data){
-            if(data.button_pressed == 0){
-				jsPsych.endExperiment();
-			}
-		}
+		choices: ["Envoyer"]
 	};
 	timeline.push(concours);
-
+	
     jsPsych.init({
         timeline: timeline,
         preload_audio: audio,
@@ -1147,9 +1258,13 @@
  		use_webaudio: true,
  		show_progress_bar: true,
     	auto_update_progress_bar: false,
-    	message_progress_bar: ""
-//        on_finish: function() {
-//			jsPsych.data.displayData('csv');
+    	message_progress_bar: "",
+//    	on_trial_finish : function() {
+//	        var resultats = jsPsych.data.get().csv();
+//	        jatos.submitResultData(resultats);
+//		},
+//		on_finish: function() {
+//			jatos.endStudyAndRedirect("https://psyuqtr.limequery.com/929252?lang=fr");
 //		}
     })
 
