@@ -27,7 +27,8 @@
   	var timeline = [];
   	
   	var count = 0;
-	var n_trials = 79;
+	var n_trials = 38; //Test
+//	var n_trials = 80; 
   	
 // Version
     var version = jsPsych.randomization.sampleWithoutReplacement([1,2],1)[0];
@@ -770,7 +771,12 @@
 			"Commencez par placer vos doigts sur ces trois flèches, puis appuyez sur l’une d’elles.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
 
 	var instructions_generales2 = {
@@ -783,7 +789,12 @@
 			"Chaque fois que vous verrez ces flèches, vous devrez appuyer sur l’une d’elles pour continuer.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
     
     var procedure_instructions_generales = {
@@ -801,13 +812,18 @@
 			"Très bien! Maintenant, vous allez faire une pratique de la tâche.<br />"+
 			"<br />"+
 			"Vous entendrez un mot qui représente une émotion, et vous verrez trois visages.<br />"+
-			"Vous devrez choisir le visage qui va le mieux avec l’émotion.<br />"+
+			"Vous devrez choisir le visage qui correspond le mieux à l’émotion.<br />"+
 			"Vous verrez ensuite si vous avez eu la bonne ou la mauvaise réponse.<br />"+
 			"<br />"+
 			"N’oubliez pas de toujours garder vos doigts sur les trois flèches.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
 
 	timeline.push(instructions_pratique);
@@ -819,7 +835,7 @@
 		stimulus: jsPsych.timelineVariable("phrase"),
  		prompt: "<span style='font-family:arial;font-size:40px;'>+</span>",
  		choices: jsPsych.NO_KEYS,
- 		trial_ends_after_audio: true, 
+ 		trial_ends_after_audio: true
 	}
 	
 	var image = {
@@ -990,19 +1006,24 @@
 			"Très bien! Maintenant, vous êtes prêt(e) à commencer la tâche pour vrai.<br />"+
 			"<br />"+
 			"Cette fois, vous entendrez une phrase et vous verrez trois images. Dans la phrase, les mots seront dans un ordre différent<br />"+
-			"de ce à quoi on est habitué en français. C’est normal que vous trouviez cela difficile à comprendre; ce n’est pas grave.<br />"+
+			"de ce à quoi on est habitué en français. C’est normal que vous trouviez cela difficile à comprendre, ne vous en faites pas.<br />"+
 			"<br />"+
 			"Dans chaque image, il y aura deux visages. Ça ressemblera à ceci :<br />"+
 			"<img src='img/exemple.jpeg'></img><br />"+
 			"Dans cet exemple, le garçon regarde la fille.<br />"+
 			"<br />"+
-			"Pour chaque phrase, vous devrez choisir l’image qui va le mieux avec la phrase. Si vous ne savez pas, ce n’est pas grave;<br />"+
+			"Pour chaque phrase, vous devrez choisir l’image qui correspond le mieux à la phrase. Si vous ne savez pas, ce n’est pas grave,<br />"+
 			"vous n’avez qu’à deviner. Vous verrez ensuite si vous avez eu la bonne ou la mauvaise réponse.<br />"+
 			"<br />"+
 			"N’oubliez pas de toujours garder vos doigts sur les trois flèches.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
 
 	timeline.push(instructions_test);
@@ -1029,7 +1050,12 @@
 			"Quand vous serez prêt(e) à continuer la tâche, appuyez sur l’une des trois flèches.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
     
     var instructions_pause2 = {
@@ -1040,7 +1066,12 @@
 			"Vous allez maintenant continuer la tâche.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
 
     var procedure_instructions_pause = {
@@ -1065,10 +1096,15 @@
 			"<br />"+
 			"Très bien! Vous avez maintenant terminé la tâche.<br />"+
 			"<br />"+
-			"Il reste seulement quelques étapes à faire avant d’avoir complètement fini.<br />"+
+			"Il reste seulement quelques étapes à compléter avant la fin de l'étude.<br />"+
 			"<br />"+
 			"<img src='img/fleches.png'></img>",
- 		choices: [37, 40, 39]
+ 		choices: [37, 40, 39],
+ 		on_finish: function(data) {
+        	count++;
+        	var progress = count/n_trials
+            jsPsych.setProgressBar(progress);
+        }
     }
     
     var exit_fullscreen = {
@@ -1130,7 +1166,7 @@
 //	        jatos.submitResultData(resultats);
 //		},
 //		on_finish: function() {
-//			jatos.endStudyAndRedirect("https://psyuqtr.limequery.com/929252?lang=fr");
+//			jatos.endStudyAndRedirect("https://psyuqtr.limequery.com/187454?lang=fr");
 //		}
     })
 
